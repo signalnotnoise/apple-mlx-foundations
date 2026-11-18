@@ -2,28 +2,28 @@
 
 Last audited: **2026-11-17**.
 
-This is the canonical release record for the Shap-E v0.1.0 candidate and the
-checklist that remains before a coordinated public release. Repository layout
+This is the canonical release record for the Shap-E v0.1.0 public release.
+Repository layout
 and the bundle file contract are documented in
 [File structure](FILE-STRUCTURE.md).
 
 ## Current state
 
-The Shap-E weights are public; the source repository is not published yet.
-This tree is the prepared fresh-history public candidate: one clean initial
-commit seeded from the cleaned development tree. The full development history
-is retained separately in a private archive and is not part of this candidate:
+The Shap-E source and weights are public as v0.1.0. This source repository
+starts with one clean initial commit seeded from the cleaned development
+tree. The full development history is retained separately in a private
+archive and is not part of this repository:
 
 | Artifact | Location | Current state | Pinned revision |
 |---|---|---|---|
-| Source code | Fresh public repository (not yet created) | Local one-commit candidate prepared; no remote, release, or version tag yet | Initial candidate tree prepared 2026-11-17; export/test snapshot identifiers are recorded in the Hub `provenance.json` and validation summaries |
-| Shap-E weights | `signalNotNoise/shap-e-mlx` on Hugging Face | Public v0.1.0 candidate; tag pending anonymous source verification | Pinned revision `d71f70a09b9c03535188d006a719edda5c19a6eb`; exact download verified against `checksums.sha256` |
+| Source code | `signalnotnoise/apple-mlx-foundations` on GitHub | Public; matching `v0.1.0` tag and GitHub Release published | Initial commit `018215715177943fe72cea8e540bc7b80dcb593f`; anonymous recursive clean clone, full local verification, public bundle download, and mesh smoke passed before tagging |
+| Shap-E weights | `signalNotNoise/shap-e-mlx` on Hugging Face | Public; matching `v0.1.0` tag | Pinned revision `d71f70a09b9c03535188d006a719edda5c19a6eb`; anonymous exact download verified against `checksums.sha256` |
 | TripoSR source submodule | `signalnotnoise/TripoSR` on GitHub | Public repository; pinned as a submodule here | `fe42dcca88fb27f3605aa394322ec3e751584233` |
 | TripoSR MLX weights | Not yet published | Separate release track | Local ignored `TripoSR/triposr_weights/*.safetensors` only |
 
-## Shap-E v0.1.0 candidate
+## Shap-E v0.1.0 weights
 
-The Hugging Face candidate contains 1,104 files and 5,143,254,750 bytes,
+The Hugging Face repository contains 1,104 files and 5,143,254,750 bytes,
 including 1,088 float32 tensors in seven format-v1 families. Its card and
 complete layout are summarized in
 [File structure — Hugging Face model repository](FILE-STRUCTURE.md#hugging-face-model-repository).
@@ -107,23 +107,17 @@ correlation/mean-error thresholds rather than exact equality. The current
 Hub model card now reports the passed image parity and points to
 `validation/image-parity.json` for the exact metrics and mesh counts.
 
-## Publication gates still open
+## Publication record
 
-Do not publish this candidate until each item is explicitly completed or accepted:
+The v0.1.0 gates are complete:
 
-1. **Create and verify the fresh public repository.** Create the separate
-   public remote only when the coordinated setup begins, push only this
-   candidate's initial commit, and verify that it has no extra branches,
-   tags, bundles, mirror refs, or unreachable development objects. Rescan
-   the exact initial tree before pushing.
-2. **Clean-clone smoke test.** After the fresh public source repository exists,
-   clone anonymously with `--recurse-submodules`, build, test, download the
-   public bundle at the pinned revision, and generate a mesh. Only then
-   announce the release.
-3. **Matching release identifiers.** Create the intended GitHub release/tag
-   and, if desired, an equivalent Hugging Face tag after the code and weights
-   have both passed the clean-clone check. Update this file and both READMEs
-   in the same change.
+1. The separate public source remote was created and received only the
+   candidate's initial commit.
+2. An anonymous recursive clean clone passed full local verification,
+   downloaded the public bundle at the pinned revision, and generated a
+   closed text mesh.
+3. Matching `v0.1.0` identifiers were created on GitHub and Hugging Face
+   after that verification.
 
 Resolved since the prior audit: the GitHub profile public email is now
 `alex@signalnotnoise.dev`.
