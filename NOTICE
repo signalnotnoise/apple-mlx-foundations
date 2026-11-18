@@ -1,0 +1,45 @@
+apple-mlx-foundations
+Copyright (c) 2026 signalnotnoise
+Licensed under the MIT License; see LICENSE.
+
+This project is an independent port and reimplementation effort. It is not
+affiliated with or endorsed by OpenAI, Apple, Tripo AI, or Stability AI.
+
+Third-party software and models this project builds on:
+
+1. Shap-E (OpenAI)
+   https://github.com/openai/shap-e
+   MIT License, Copyright (c) 2023 OpenAI.
+   The Python check/export tooling in shap_e/src/cli uses the upstream Shap-E
+   PyTorch implementation as the reference oracle and to obtain the original
+   checkpoints for conversion. The MLX (Python) and ShapERuntime (Swift)
+   implementations in this repository are ports of that model architecture.
+
+2. CLIP (OpenAI)
+   https://github.com/openai/CLIP
+   MIT License, Copyright (c) 2021 OpenAI.
+   Shap-E conditions on CLIP-ViT-L/14 embeddings. The BPE vocabulary file
+   (bpe_simple_vocab_16e6.txt.gz) expected by the Swift tokenizer comes from
+   the CLIP project. It is not included in this repository; obtain it from
+   the CLIP project.
+
+3. TripoSR (Tripo AI & Stability AI / VAST-AI-Research)
+   https://github.com/VAST-AI-Research/TripoSR
+   MIT License, Copyright (c) 2024 Tripo AI & Stability AI.
+   Included as the TripoSR git submodule, which carries its own LICENSE. The
+   Swift port under TripoSR/swift is part of that submodule.
+
+4. MLX and mlx-swift (Apple)
+   https://github.com/ml-explore/mlx
+   https://github.com/ml-explore/mlx-swift
+   MIT License, Copyright (c) 2023 Apple Inc.
+   Used as ordinary package dependencies (SwiftPM / PyPI); not vendored.
+
+Model weights:
+No pretrained model weights are included in this repository. Converted
+weights (runtime_bundle/) and downloaded checkpoints (shap_e_model_cache/)
+are git-ignored local artifacts that each user must generate or download
+under the upstream projects' licenses. The only tensors checked in are the
+tiny random-weight test stub under
+shap_e/swift/Tests/ShapERuntimeTests/Fixtures/, which contains no trained
+parameters.

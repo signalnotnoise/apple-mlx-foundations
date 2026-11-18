@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apple-mlx-foundations"
+version = "0.1.0"
+description = "Apple MLX experiments for model conversion and inference workflows"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "accelerate",
+  "diffusers",
+  "huggingface-hub",
+  "ipykernel",
+  "matplotlib",
+  "mlx-lm",
+  "numpy",
+  "pillow",
+  "safetensors",
+  "torch",
+  "transformers",
+  "trimesh",
+  "setuptools == 69.5.1",
+  "clip @ git+https://github.com/openai/CLIP.git",
+  "shap-e @ git+https://github.com/openai/shap-e.git",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "ruff",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+# Start with correctness-critical rules. Broader style is introduced only
+# when the touched code can be cleaned without unrelated churn.
+select = ["E9", "F63", "F7", "F82"]
+
+[tool.setuptools]
+include-package-data = false
+package-dir = {"" = "shap_e/src"}
+
+[tool.setuptools.packages.find]
+where = ["shap_e/src"]
+include = ["mlx_shap_e*"]

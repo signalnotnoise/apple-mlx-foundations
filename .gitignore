@@ -1,0 +1,80 @@
+# macOS
+.DS_Store
+
+# Python cache/build
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.build/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.mlxEnv/
+.mlx_venv/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local project artifacts
+shap_e/Niko/
+*.log
+shap_e/models/
+shap_e/shap_e_model_cache/
+shap_e/src/shap_e_model_cache/
+shap_e_model_cache/
+shap_e/outputs/
+shap_e/*_keys.txt
+shap_e/text300M_keys.txt
+shap_e/text300M_prefix_counts.txt
+shap_e/text300M_tensor_shapes.txt
+shap_e_model_cache/text_cond_config.yaml
+shap_e_model_cache/text_cond_config.yaml.lock
+shap_e_model_cache/text_cond.pt
+shap_e_model_cache/text_cond.pt.lock
+shap_e_model_cache/ViT-L-14.pt
+runtime_bundle/
+
+# MLX & Tensor Caches
+*.npz
+*.safetensors
+
+# Swift / Xcode
+.swiftpm/
+xcuserdata/
+*.xcuserstate
+*.metallib
+TripoSR/swift/.derivedData/
+TripoSR/swift/.build/
+
+# Generated TripoSR parity dumps (regenerate via scripts/run_parity.sh)
+TripoSR/parity/*.npy
+TripoSR/parity/*.npz
+!TripoSR/parity/README.md
+
+# Shap-E mesh A/B dumps (regenerate via shap_e/scripts/run_mesh_ab.sh)
+shap_e/mesh_ab/
+shap_e/mesh_ab_smoke/
+
+# Shap-E Swift build / scratch
+shap_e/swift/.derivedData/
+shap_e/swift/.build/
+shap_e/swift/test_*
+
+# Generated Shap-E MLX↔Swift parity dumps (regenerate via shap_e/scripts/run_parity.sh)
+shap_e/parity/*.npy
+shap_e/parity/*.npz
+shap_e/parity/*_summary.json
+shap_e/parity/case.json
+!shap_e/parity/README.md
+runtime_wrapper/Package.resolved
+*.profraw

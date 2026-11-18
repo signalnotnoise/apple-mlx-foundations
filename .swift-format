@@ -1,0 +1,17 @@
+{
+  "indentation" : {
+    "spaces" : 4
+  },
+  "lineLength" : 120,
+  "maximumBlankLines" : 1,
+  "rules" : {
+    "AllPublicDeclarationsHaveDocumentation" : true,
+    "AlwaysUseLowerCamelCase" : true,
+    "DoNotUseSemicolons" : true,
+    "NoParensAroundConditions" : true,
+    "OrderedImports" : true,
+    "TypeNamesShouldBeCapitalized" : true,
+    "UseTripleSlashForDocumentationComments" : true
+  },
+  "version" : 1
+}

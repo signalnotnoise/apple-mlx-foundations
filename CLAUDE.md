@@ -1,0 +1,8 @@
+# Project rules
+
+Follow `AGENTS.md`, including the mandatory coding standards in
+`docs/CODING-STANDARDS.md`. Run `python3 scripts/check_standards.py --changed`
+and `python3 knowledge_graph/update_graph.py` before finishing a repository
+change. Update `knowledge_graph/curated.json` when architecture, a public
+runtime API, or a pipeline stage changes. Do not hand-edit
+`knowledge_graph/graph.json`, and do not commit with `--no-verify`.

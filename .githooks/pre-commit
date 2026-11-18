@@ -1,0 +1,24 @@
+#!/bin/sh
+# Run coding standards on staged files, then rebuild the knowledge graph and
+# include it in this commit. Runs for every commit in this clone, whichever
+# tool made the edit. KNOWLEDGE_GRAPH_SKIP=1 skips only the graph step in an
+# emergency; it does not skip coding standards.
+
+root=$(git rev-parse --show-toplevel) || exit 1
+cd "$root" || exit 1
+
+if ! python3 scripts/check_standards.py --staged; then
+  echo "coding standards check failed; commit aborted" >&2
+  exit 1
+fi
+
+if [ -n "$KNOWLEDGE_GRAPH_SKIP" ]; then
+  exit 0
+fi
+
+if ! python3 knowledge_graph/update_graph.py; then
+  echo "knowledge graph update failed; commit aborted" >&2
+  exit 1
+fi
+
+git add -- knowledge_graph/graph.json knowledge_graph/README.md

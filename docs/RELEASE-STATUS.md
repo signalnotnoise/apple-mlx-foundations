@@ -1,0 +1,202 @@
+# Release status
+
+Last audited: **2026-11-17**.
+
+This is the canonical release record for the Shap-E v0.1.0 candidate and the
+checklist that remains before a coordinated public release. Repository layout
+and the bundle file contract are documented in
+[File structure](FILE-STRUCTURE.md).
+
+## Current state
+
+The Shap-E weights are public; the source repository is not published yet.
+This tree is the prepared fresh-history public candidate: one clean initial
+commit seeded from the cleaned development tree. The full development history
+is retained separately in a private archive and is not part of this candidate:
+
+| Artifact | Location | Current state | Pinned revision |
+|---|---|---|---|
+| Source code | Fresh public repository (not yet created) | Local one-commit candidate prepared; no remote, release, or version tag yet | Initial candidate tree prepared 2026-11-17; export/test snapshot identifiers are recorded in the Hub `provenance.json` and validation summaries |
+| Shap-E weights | `signalNotNoise/shap-e-mlx` on Hugging Face | Public v0.1.0 candidate; tag pending anonymous source verification | Pinned revision `d71f70a09b9c03535188d006a719edda5c19a6eb`; exact download verified against `checksums.sha256` |
+| TripoSR source submodule | `signalnotnoise/TripoSR` on GitHub | Public repository; pinned as a submodule here | `fe42dcca88fb27f3605aa394322ec3e751584233` |
+| TripoSR MLX weights | Not yet published | Separate release track | Local ignored `TripoSR/triposr_weights/*.safetensors` only |
+
+## Shap-E v0.1.0 candidate
+
+The Hugging Face candidate contains 1,104 files and 5,143,254,750 bytes,
+including 1,088 float32 tensors in seven format-v1 families. Its card and
+complete layout are summarized in
+[File structure — Hugging Face model repository](FILE-STRUCTURE.md#hugging-face-model-repository).
+
+Provenance committed beside the weights in `provenance.json` records:
+
+- Code commit: `8ab95d13140fa617a50f4f7ccf7a56fec9768ef2`
+- Bundle format: `artifact_version: 1`
+- Upstream Shap-E code: `50131012ee11c9d2617f3886c10f000d3c7a3b43`
+- Upstream CLIP code: `d05afc436d78f1c48dc0dbf8e5980a9d471f35f6`
+- Source checkpoints, byte counts, and SHA-256 hashes for `ViT-L-14.pt`,
+  `text_cond.pt`, `image_cond.pt`, `vector_decoder.pt`, and their YAML files
+- Export module:
+  `mlx_shap_e.offline_tools.runtime_artifact_exports`
+- Environment: Python 3.14.3, macOS 27.3/arm64, Xcode 27.0 build 27A5252f,
+  mlx-swift 0.31.3
+
+Conversion is a format/layout export. It is not training or fine-tuning.
+Upstream licenses are included on the Hub under `licenses/Shap-E.txt` and
+`licenses/CLIP.txt`; project attribution is in [`NOTICE`](../NOTICE).
+
+## Verification already recorded
+
+The Hugging Face `validation/` directory carries the public-evidence subset:
+`l0-results.json`, `l2.log`, `mesh-report.json`, and
+`download-verification.json`. The fuller local release workpapers are not part
+of this Git repository.
+
+### Component and parity evidence
+
+- **L0 component comparisons:** Text300M, CLIP text, and four decoder
+  projection weights were compared against the upstream path. Recorded
+  correlations are effectively 1.0; the largest recorded max-absolute error is
+  Text300M at `1.5735626220703125e-05`.
+- **L1:** The committed Python MLX golden summary passed.
+- **L2:** Full-tensor Python MLX versus Swift passed for token IDs, CLIP
+  embedding, sigmas, latent, `pred_xstart`, SDF field, four decoder parameter
+  tensors, mesh counts, bounding box, vertices, and CPU face identity. The
+  smoke mesh had 1,016 vertices and 1,948 faces.
+- **Production mesh smoke:** Prompt `a red chair`, seed 7, 64 steps, grid 64,
+  guidance 15. CPU and Metal each reported 9,882 vertices, 19,684 faces,
+  `boundaryEdgeCount: 0`, `nonManifoldEdgeCount: 0`,
+  `invalidFaceCount: 0`, and `isClosed: true`.
+- **Fresh download:** The verified private staging snapshot passed checksums,
+  L1, and L2 before publication. The fresh public repository was then seeded
+  from that payload at `d71f70a09b9c03535188d006a719edda5c19a6eb`, downloaded
+  again, and all 1,102 checksum entries reverified.
+- **Swift unit suite:** After adding the image-orientation regression test,
+  `ShapERuntimeTests` executed 36 tests with 3 skipped and 0 failures.
+- **Image conditioning (2026-11-17 follow-up):** A new Torch-oracle harness
+  passed on both a deterministic synthetic image and
+  `TripoSR/examples/chair.png`. It separately gates Swift CLIP preprocessing,
+  `ClipImageEmbedder` grid output from an exact shared input, `Image300M`
+  with the Torch grid, `Image300M` with the Swift grid, and a 64-step,
+  grid-64 CPU/Metal mesh smoke. Neural component correlations printed as
+  1.00000, with mean absolute errors of about `7.1e-6` for the grid and
+  `1.0e-6`–`2.4e-6` for Image300M. Both mesh backends produced identical,
+  closed counts with zero boundary, nonmanifold, or invalid faces. The run
+  found and fixed a vertical flip in `ImageProcessor`. The fix and harness
+  are included in this candidate tree and recorded in the Hub summary; the
+  Hub evidence/model card were refreshed at
+  `d71f70a09b9c03535188d006a719edda5c19a6eb`.
+- **Partial download and downloader (2026-11-17 follow-up):**
+  `cli.run.download_shap_e_bundle` pins
+  `d71f70a09b9c03535188d006a719edda5c19a6eb`, verifies SHA-256 entries, and
+  has 7 unit tests for scope/checksum behavior. Its `--text-only` mode
+  downloaded 495 files (494 checksum entries) with no `clip_vision` or
+  `image300m` directory; that partial bundle then generated a closed
+  688-vertex/1,356-face text mesh in CPU and Metal. Text-only mode rejects a
+  non-empty existing image family so it cannot mislabel a full local bundle.
+
+### Scope of that evidence
+
+The original fresh-download verification covered the **text-conditioned**
+path. The follow-up above now covers Swift image preprocessing, the CLIP
+vision grid, Image300M, sampling through decoder projection, and CPU/Metal
+mesh topology against upstream Torch components. It does not add a Python MLX
+image runtime: Python's typed bundle loader still has no `clip_vision` or
+`image300m` artifact loader, and platform image resampling is gated by
+correlation/mean-error thresholds rather than exact equality. The current
+Hub model card now reports the passed image parity and points to
+`validation/image-parity.json` for the exact metrics and mesh counts.
+
+## Publication gates still open
+
+Do not publish this candidate until each item is explicitly completed or accepted:
+
+1. **Create and verify the fresh public repository.** Create the separate
+   public remote only when the coordinated setup begins, push only this
+   candidate's initial commit, and verify that it has no extra branches,
+   tags, bundles, mirror refs, or unreachable development objects. Rescan
+   the exact initial tree before pushing.
+2. **Clean-clone smoke test.** After the fresh public source repository exists,
+   clone anonymously with `--recurse-submodules`, build, test, download the
+   public bundle at the pinned revision, and generate a mesh. Only then
+   announce the release.
+3. **Matching release identifiers.** Create the intended GitHub release/tag
+   and, if desired, an equivalent Hugging Face tag after the code and weights
+   have both passed the clean-clone check. Update this file and both READMEs
+   in the same change.
+
+Resolved since the prior audit: the GitHub profile public email is now
+`alex@signalnotnoise.dev`.
+
+Work deliberately left as a separate track: TripoSR weights. Before any
+`triposr-mlx` publication, verify derived-weight redistribution terms, choose
+the canonical file between `triposr_mlx.safetensors` and
+`triposr_swift_ready.safetensors`, document their roles, and run the same
+private-upload/fresh-download verification pattern.
+
+## Reproduce or audit the candidate
+
+The tested export snapshot identifier is recorded in the Hub
+`provenance.json`; do not silently substitute a later tree when comparing
+against the recorded hashes.
+
+To inspect the exact verified public weights, pin the release revision:
+
+```python
+from huggingface_hub import snapshot_download
+
+bundle = snapshot_download(
+    "signalNotNoise/shap-e-mlx",
+    revision="d71f70a09b9c03535188d006a719edda5c19a6eb",
+)
+print(bundle)
+```
+
+Verify payload files against `checksums.sha256` before using them.
+
+To re-export from upstream checkpoints, use the Hub files
+`reproduce_export.py` and `requirements-validation.txt` at the pinned
+revision, or call the source exporter in this repository:
+
+```bash
+cd shap_e/src
+python -m mlx_shap_e.offline_tools.runtime_artifact_exports \
+  --bundle-dir ../../runtime_bundle \
+  --cache-dir ../../shap_e_model_cache
+```
+
+That exporter calls
+`prepare_runtime_artifacts`, which writes all seven families. It does not add
+the Hub-only root files (`bpe_simple_vocab_16e6.txt.gz`, `provenance.json`,
+`checksums.sha256`, licenses, model card, `validation/`, or
+`reproduce_export.py`); those belong to release packaging.
+
+## Release procedure for the next bundle
+
+1. Freeze one code commit and record it before exporting.
+2. Export all seven families into a new empty staging bundle; never upload a
+   long-lived local `runtime_bundle/` without regenerating or proving its
+   checkpoint provenance and checksums.
+3. Run L0 component comparisons, L1, L2, Swift unit tests, and at least one
+   production CPU and Metal mesh topology check. Add image-path gates before
+   claiming image validation.
+4. Package `provenance.json`, upstream licenses, BPE vocabulary,
+   `checksums.sha256`, model card, release requirements, a re-export driver,
+   and the `validation/` summaries.
+5. Upload to a private Hub revision. Download that exact revision into a
+   fresh directory, verify every checksum, then rerun L1/L2 and `ShapECLI`
+   from the downloaded files.
+6. Update this status file, [File structure](FILE-STRUCTURE.md), the root
+   [README](../README.md), the [ShapERuntime README](../shap_e/swift/README.md),
+   and the knowledge graph in the same code change.
+7. Flip GitHub and Hugging Face only after all publication gates above are
+   resolved or explicitly accepted, then repeat the test anonymously from a
+   fresh recursive clone and a fresh Hub download.
+
+## Update rule
+
+Any change to a repository URL, visibility, pinned revision, bundle family,
+tensor count, byte total, validation scope, or publication gate must update
+this file and [File structure](FILE-STRUCTURE.md) together. Do not copy a
+“passed” result forward to a new code commit or bundle revision without
+rerunning it.

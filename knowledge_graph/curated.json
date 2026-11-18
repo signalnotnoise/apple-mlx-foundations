@@ -1,0 +1,1971 @@
+{
+  "name": "apple-mlx-foundations",
+  "description": "Architectural knowledge graph of the Apple MLX Foundations repo: Shap-E and TripoSR ports onto Apple Silicon, plus the optional Swift facade.",
+  "schema": {
+    "node_kinds": [
+      "repo",
+      "system",
+      "package",
+      "module",
+      "artifact",
+      "stage",
+      "entrypoint",
+      "gate",
+      "external",
+      "test",
+      "note"
+    ],
+    "edge_rels": [
+      "contains",
+      "depends_on",
+      "ports",
+      "implements",
+      "produces",
+      "consumes",
+      "validates",
+      "calls",
+      "feeds",
+      "selects",
+      "mirrors"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "repo",
+      "kind": "repo",
+      "name": "apple-mlx-foundations",
+      "path": ".",
+      "summary": "MLX-native workspace that ports OpenAI Shap-E (text or image to mesh) and TripoSR (image to 3D) onto Apple Silicon, with a Swift path aimed at visionOS."
+    },
+    {
+      "id": "sys.shap-e",
+      "kind": "system",
+      "name": "Shap-E",
+      "summary": "Latent diffusion model. A 300M transformer denoises a latent, a projector turns that latent into NeRSTF weights, and an STF renderer plus marching cubes emits a colored mesh. Text and image conditioning both exist in Swift. The Python MLX runtime surface is text-only."
+    },
+    {
+      "id": "sys.triposr",
+      "kind": "system",
+      "name": "TripoSR",
+      "summary": "Feedforward image-to-3D model. DINOv2 tokens cross-attend into a triplane, a small NeRF MLP queries density and color. The Swift package stops at that query. Mesh extraction for TripoSR lives in RuntimeWrapper and reuses Shap-E marching cubes."
+    },
+    {
+      "id": "sys.wrapper",
+      "kind": "system",
+      "name": "RuntimeWrapper",
+      "path": "runtime_wrapper",
+      "summary": "Optional model-selection facade. Applications that need one model import that package directly. The two model packages do not depend on each other."
+    },
+    {
+      "id": "ext.openai-shap-e",
+      "kind": "external",
+      "name": "openai/shap-e",
+      "summary": "PyTorch reference. Installed from git. Checkpoints land in shap_e_model_cache. L0 parity compares against this, not against Swift."
+    },
+    {
+      "id": "ext.openai-clip",
+      "kind": "external",
+      "name": "openai/CLIP",
+      "summary": "ViT-L/14 text and vision towers. Shap-E conditions the diffusion transformer on CLIP embeddings. BPE vocab is a separate file the Swift tokenizer loads."
+    },
+    {
+      "id": "ext.hf-triposr",
+      "kind": "external",
+      "name": "stabilityai/TripoSR",
+      "summary": "Hugging Face checkpoint (model.ckpt) plus config. Product Python loads it via TSR.from_pretrained. Swift never downloads it; it loads the remapped safetensors."
+    },
+    {
+      "id": "ext.mlx-swift",
+      "kind": "external",
+      "name": "ml-explore/mlx-swift",
+      "summary": "Swift MLX and MLXNN, from 0.29.1. All three Swift packages depend on it. Metal kernels for marching cubes ship inside ShapERuntime, not inside mlx-swift."
+    },
+    {
+      "id": "ext.mlx-python",
+      "kind": "external",
+      "name": "mlx",
+      "summary": "Python MLX (mlx.core, mlx.nn). The reference implementation of Shap-E math. pyproject declares mlx-lm, which is how MLX arrives in the environment."
+    },
+    {
+      "id": "ext.torch",
+      "kind": "external",
+      "name": "torch",
+      "summary": "Used by upstream Shap-E, upstream TripoSR, export scripts, and L0 parity. The Swift inference path does not import it."
+    },
+    {
+      "id": "pkg.py.mlx-shap-e",
+      "kind": "package",
+      "name": "mlx_shap_e",
+      "path": "shap_e/src/mlx_shap_e",
+      "summary": "Python package installed from shap_e/src (see pyproject.toml). Holds the MLX models, the runtime bundle contract, and the text-to-mesh runtime. CLI lives beside it in shap_e/src/cli and is run as python -m from that directory."
+    },
+    {
+      "id": "pkg.swift.shap-e",
+      "kind": "package",
+      "name": "ShapERuntime",
+      "path": "shap_e/swift/Package.swift",
+      "summary": "Swift package. Products: library ShapERuntime, executable ShapECLI. Platforms: macOS 14, iOS 17, visionOS 1. Depends only on mlx-swift. Owns MarchingCubes.metal."
+    },
+    {
+      "id": "pkg.swift.triposr",
+      "kind": "package",
+      "name": "TripoSR",
+      "path": "TripoSR/Package.swift",
+      "summary": "Consumer-facing Swift package. Same products as the standalone package (TripoSRRuntime, TripoSRCLI) but sources stay under TripoSR/swift so RuntimeWrapper can depend on ../TripoSR without a path named swift colliding."
+    },
+    {
+      "id": "pkg.swift.triposr-standalone",
+      "kind": "package",
+      "name": "TripoSRRuntime standalone",
+      "path": "TripoSR/swift/Package.swift",
+      "summary": "Standalone Swift package for building TripoSRCLI with xcodebuild from TripoSR/swift. Same sources as the root package. Does not depend on ShapERuntime."
+    },
+    {
+      "id": "pkg.swift.wrapper",
+      "kind": "package",
+      "name": "RuntimeWrapper",
+      "path": "runtime_wrapper/Package.swift",
+      "summary": "Library only. Depends on ShapERuntime (path ../shap_e/swift), TripoSRRuntime (path ../TripoSR), and mlx-swift. The TripoSR path is a git submodule; swift build fails until git submodule update --init."
+    },
+    {
+      "id": "art.torch-cache",
+      "kind": "artifact",
+      "name": "shap_e_model_cache",
+      "path": "shap_e_model_cache",
+      "optional": true,
+      "summary": "OpenAI torch checkpoints and configs: text_cond.pt, image_cond.pt, vector_decoder.pt, ViT-L-14.pt, plus yaml configs. A second copy exists at shap_e/shap_e_model_cache. Export scripts read this. Inference runtimes do not."
+    },
+    {
+      "id": "art.runtime-bundle",
+      "kind": "artifact",
+      "name": "runtime_bundle",
+      "path": "runtime_bundle",
+      "optional": true,
+      "summary": "Versioned tensor bundle (artifact_version 1) shared by Python MLX and Swift. Families: clip_text, clip_vision, text300m, image300m, diffusion, decoder_params, renderer. Each family is a manifest entry plus raw C-order .bin blobs. The full audited bundle has 1,088 float32 tensors; tensor files total 5,141,395,248 bytes. Gitignored. manifest.json is the contract; canonical schema and layout are docs/FILE-STRUCTURE.md."
+    },
+    {
+      "id": "art.bundle-stub",
+      "kind": "artifact",
+      "name": "runtime_bundle_stub",
+      "path": "shap_e/swift/Tests/ShapERuntimeTests/Fixtures/runtime_bundle_stub",
+      "summary": "Tiny checked-in bundle with the same family layout and random or truncated weights. ShapERuntimeTests load this instead of the full bundle."
+    },
+    {
+      "id": "art.niko-bundle",
+      "kind": "artifact",
+      "name": "runtime_bundle_v1",
+      "path": "shap_e/Niko/artifacts/runtime_bundle_v1",
+      "optional": true,
+      "summary": "Earlier exported bundle: clip_text, text300m, diffusion, decoder_params, renderer. No clip_vision or image300m."
+    },
+    {
+      "id": "art.bpe",
+      "kind": "artifact",
+      "name": "CLIP BPE vocab",
+      "summary": "bpe_simple_vocab_16e6.txt.gz. Not a runtime-bundle tensor family or manifest entry. Local exports keep it outside runtime_bundle; the Hugging Face distribution places it beside manifest.json. Swift ShapERuntime init takes it as a separate URL. Python ClipSimpleTokenizer resolves a default path."
+    },
+    {
+      "id": "art.hf-shap-e-mlx",
+      "kind": "artifact",
+      "name": "signalNotNoise/shap-e-mlx",
+      "summary": "Public Hugging Face distribution of the full format-v1 Shap-E runtime bundle at audited revision d71f70a09b9c03535188d006a719edda5c19a6eb. 1,104 files and 5,143,254,750 bytes: 1,088 tensors, manifest, separate BPE file, provenance, checksums, upstream licenses, validation summaries, and re-export driver."
+    },
+    {
+      "id": "art.triposr-ckpt",
+      "kind": "artifact",
+      "name": "TripoSR model.ckpt",
+      "summary": "Upstream PyTorch checkpoint from Hugging Face. Used by run.py, gradio_app.py, and the parity dump. Not loaded by Swift."
+    },
+    {
+      "id": "art.triposr-mlx",
+      "kind": "artifact",
+      "name": "triposr_mlx.safetensors",
+      "path": "TripoSR/triposr_weights/triposr_mlx.safetensors",
+      "optional": true,
+      "summary": "Intermediate pack of the HF checkpoint. Gitignored. Input to the key remapper. Not loaded by Swift."
+    },
+    {
+      "id": "art.triposr-swift",
+      "kind": "artifact",
+      "name": "triposr_swift_ready.safetensors",
+      "path": "TripoSR/triposr_weights/triposr_swift_ready.safetensors",
+      "optional": true,
+      "summary": "Only weight file TripoSRModel.loadWeights accepts. Keys and layouts already match the Swift modules."
+    },
+    {
+      "id": "stage.se.tokenize",
+      "kind": "stage",
+      "name": "CLIP tokenize",
+      "summary": "Prompt string to token ids, context length 77, CLIP BPE."
+    },
+    {
+      "id": "stage.se.text-embed",
+      "kind": "stage",
+      "name": "CLIP text embed",
+      "summary": "Token ids through the ViT-L/14 text tower (width 768, 12 heads, 12 layers) to a conditioning embedding. Swift also embeds the empty prompt for classifier-free guidance."
+    },
+    {
+      "id": "stage.se.image-embed",
+      "kind": "stage",
+      "name": "CLIP image embed",
+      "summary": "CGImage through CLIP Resize(224)+CenterCrop(224), then the vision tower. Swift only. Loaded on the first image generate, because clip_vision plus image300m is about 2.3 GB."
+    },
+    {
+      "id": "stage.se.text300m",
+      "kind": "stage",
+      "name": "Text300M forward",
+      "summary": "Diffusion transformer conditioned on text embeddings and a timestep. Predicts epsilon and learned variance."
+    },
+    {
+      "id": "stage.se.image300m",
+      "kind": "stage",
+      "name": "Image300M forward",
+      "summary": "Same diffusion-transformer role, conditioned on CLIP image embeddings. Swift only."
+    },
+    {
+      "id": "stage.se.karras",
+      "kind": "stage",
+      "name": "Karras Heun sample",
+      "summary": "Sigma schedule, Gaussian-to-Karras denoiser, Heun ODE loop, optional CFG, channel unscale. Output is the latent x plus pred_xstart and sigmas."
+    },
+    {
+      "id": "stage.se.project",
+      "kind": "stage",
+      "name": "Latent to NeRSTF params",
+      "summary": "Unwarp the latent (identity or tan2), project with per-parameter einsum weights, layer-norm, add bias, reshape to renderer parameter tensors."
+    },
+    {
+      "id": "stage.se.sdf",
+      "kind": "stage",
+      "name": "STF / NeRSTF field",
+      "summary": "Query the implicit field on a grid. SDF plus texture channels. Chunked so high-resolution extracts stay inside GPU memory."
+    },
+    {
+      "id": "stage.se.mesh",
+      "kind": "stage",
+      "name": "Marching cubes",
+      "summary": "SDF grid to verts, faces, and vertex colors. CPU Swift implementation or the Metal kernel. Python MLX has its own marching_cubes. Partial previews during sampling always use the CPU path."
+    },
+    {
+      "id": "stage.ts.dino",
+      "kind": "stage",
+      "name": "DINOv2 image tokens",
+      "summary": "ViT-B/16, embed 768, depth 12, 12 heads. Checkpoint positional embeddings are 14x14 plus CLS for 224 input. Runtime images are 512 and the positional embedding is interpolated. ImageNet mean and std are applied unless the caller already normalized."
+    },
+    {
+      "id": "stage.ts.tokens",
+      "kind": "stage",
+      "name": "Triplane token sequence",
+      "summary": "Learnable 1D tokens, plane size 32, 1024 channels. Detokenize returns three planes."
+    },
+    {
+      "id": "stage.ts.lrm",
+      "kind": "stage",
+      "name": "LRM transformer",
+      "summary": "Transformer1D, 16 layers, 16 heads, head dim 64, cross-attention dim 768 against the DINO tokens."
+    },
+    {
+      "id": "stage.ts.upsample",
+      "kind": "stage",
+      "name": "Triplane upsample",
+      "summary": "1024 channels to 40, spatial size doubled."
+    },
+    {
+      "id": "stage.ts.query",
+      "kind": "stage",
+      "name": "NeRF query",
+      "summary": "NeRFMLP (120 in, 64 wide, 9 hidden layers) sampled through the triplane renderer. Returns density and color. This is the end of TripoSRRuntime."
+    },
+    {
+      "id": "stage.ts.mesh",
+      "kind": "stage",
+      "name": "TripoSR mesh extract",
+      "summary": "RuntimeWrapper samples a density grid (default 256) in batches (default 8192), thresholds at 25, then calls Shap-E MarchingCubes or MetalMarchingCubes. Input images are resized to 512 and composited on gray (128)."
+    },
+    {
+      "id": "mod.py.pipeline",
+      "kind": "module",
+      "name": "MLXShapERuntime",
+      "path": "shap_e/src/mlx_shap_e/runtime_core/pipeline.py",
+      "symbols": [
+        "embed_text_mx",
+        "sample_latent_mx",
+        "decode_latents_to_meshes_mx",
+        "decode_latent_to_mesh_mx"
+      ],
+      "summary": "Production Python runtime. Loads clip_text, text300m, diffusion, decoder_params, and renderer from the bundle. No image path. decode_latent_to_mesh_mx requires the batch to contain exactly one mesh."
+    },
+    {
+      "id": "mod.py.types",
+      "kind": "module",
+      "name": "runtime types",
+      "path": "shap_e/src/mlx_shap_e/runtime_core/types.py",
+      "symbols": [
+        "ArtifactVersionInfo",
+        "BoundingBox",
+        "LatentResult",
+        "MeshResult",
+        "MeshBatchResult"
+      ],
+      "summary": "Shared result structs. Swift RuntimeCoreTypes.swift mirrors them."
+    },
+    {
+      "id": "mod.py.diffusion-config",
+      "kind": "module",
+      "name": "RuntimeDiffusionConfig",
+      "path": "shap_e/src/mlx_shap_e/runtime_core/diffusion.py",
+      "summary": "Schedule tensors and metadata loaded from the diffusion family: betas, alphas, posterior coefficients, channel scale and bias."
+    },
+    {
+      "id": "mod.py.bundle",
+      "kind": "module",
+      "name": "RuntimeArtifactBundle",
+      "path": "shap_e/src/mlx_shap_e/runtime_artifacts/bundle.py",
+      "symbols": [
+        "load_clip_text_artifact",
+        "load_text300m_artifact",
+        "load_diffusion_config",
+        "load_decoder_params",
+        "load_renderer"
+      ],
+      "summary": "Reads manifest.json and raw float blobs. Python loader does not expose clip_vision or image300m even though the exporter writes them."
+    },
+    {
+      "id": "mod.py.manifest",
+      "kind": "module",
+      "name": "runtime manifest",
+      "path": "shap_e/src/mlx_shap_e/runtime_artifacts/manifest.py",
+      "symbols": [
+        "TensorEntry",
+        "ArtifactFamilyManifest",
+        "RuntimeArtifactManifest",
+        "save_tensor_family"
+      ],
+      "summary": "On-disk contract: artifact_version, per-family version, metadata, and tensor entries with dtype, shape, and relative path."
+    },
+    {
+      "id": "mod.py.exports",
+      "kind": "module",
+      "name": "runtime artifact exports",
+      "path": "shap_e/src/mlx_shap_e/offline_tools/runtime_artifact_exports.py",
+      "symbols": [
+        "prepare_runtime_artifacts",
+        "export_clip_text_runtime_family",
+        "export_clip_vision_runtime_family",
+        "export_text300m_runtime_family",
+        "export_image300m_runtime_family",
+        "export_diffusion_runtime_family",
+        "export_decoder_runtime_families"
+      ],
+      "summary": "Offline only. Loads torch checkpoints from the cache and writes every runtime_bundle family. Not on the inference path."
+    },
+    {
+      "id": "mod.py.text300m",
+      "kind": "module",
+      "name": "Text300MTransformer",
+      "path": "shap_e/src/mlx_shap_e/models/text300m.py",
+      "symbols": [
+        "Text300MTransformer",
+        "WrappedText300M",
+        "timestep_embedding",
+        "Backbone",
+        "ResBlock"
+      ],
+      "summary": "MLX diffusion transformer. Swift folded timestep embedding into Text300MTransformer and does not have a separate WrappedText300M type."
+    },
+    {
+      "id": "mod.py.text300m-artifact",
+      "kind": "module",
+      "name": "Text300MArtifact",
+      "path": "shap_e/src/mlx_shap_e/models/artifacts/text300m_artifact.py",
+      "summary": "Weight container and tree conversion for the text transformer. Swift equivalent is Text300MArtifact in RuntimeArtifactTypes.swift plus Text300MArtifact.swift."
+    },
+    {
+      "id": "mod.py.clip-text",
+      "kind": "module",
+      "name": "MlxClipTextEmbedder",
+      "path": "shap_e/src/mlx_shap_e/models/embeddings/clip_text_embedder.py",
+      "symbols": [
+        "MlxClipTextEmbedder",
+        "MlxClipTextArtifact",
+        "embed_text_mx"
+      ],
+      "summary": "MLX CLIP text tower. embed_text is the NumPy wrapper around embed_text_mx."
+    },
+    {
+      "id": "mod.py.tokenizer",
+      "kind": "module",
+      "name": "ClipSimpleTokenizer",
+      "path": "shap_e/src/mlx_shap_e/models/embeddings/clip_tokenizer.py",
+      "summary": "CLIP BPE tokenizer: gzip vocab, merges, unicode cleanup, padding and truncation to 77."
+    },
+    {
+      "id": "mod.py.diffusion-step",
+      "kind": "module",
+      "name": "diffusion step",
+      "path": "shap_e/src/mlx_shap_e/models/diffusion/diffusion_step.py",
+      "symbols": [
+        "split_vector_forward_mlx",
+        "p_mean_variance_learned_range_mlx"
+      ],
+      "summary": "Splits the transformer output into epsilon and variance and computes the learned-range posterior. A NumPy twin of the posterior exists for parity."
+    },
+    {
+      "id": "mod.py.karras",
+      "kind": "module",
+      "name": "Karras sampler",
+      "path": "shap_e/src/mlx_shap_e/models/diffusion/karras_sampler.py",
+      "symbols": [
+        "karras_sample_heun_mlx",
+        "MLXGaussianToKarrasDenoiser",
+        "get_sigmas_karras_mlx"
+      ],
+      "summary": "Production sampler. Also contains NumPy and torch helper branches used by parity, not by MLXShapERuntime (that call sets strict_torch_math False)."
+    },
+    {
+      "id": "mod.py.decoder",
+      "kind": "module",
+      "name": "MLXChannelsDecoderParams",
+      "path": "shap_e/src/mlx_shap_e/models/decoder_params.py",
+      "symbols": [
+        "bottleneck_to_params_mx"
+      ],
+      "summary": "Latent unwarp and projection into the renderer parameter dict."
+    },
+    {
+      "id": "mod.py.renderer",
+      "kind": "module",
+      "name": "MLXSTFMeshRenderer",
+      "path": "shap_e/src/mlx_shap_e/models/rendering/stf_mesh_renderer.py",
+      "symbols": [
+        "extract_meshes",
+        "decode_latent_mesh_mlx_renderer"
+      ],
+      "summary": "NeRSTF field evaluation and mesh extraction. save_mlx_decoder_artifact and load_mlx_decoder_artifact are the older single-file artifact path, distinct from the runtime bundle."
+    },
+    {
+      "id": "mod.py.mc",
+      "kind": "module",
+      "name": "marching_cubes",
+      "path": "shap_e/src/mlx_shap_e/models/rendering/marching_cubes.py",
+      "summary": "MLX marching cubes with the standard edge table. Compared to torch in tests/test_marching_cubes.py."
+    },
+    {
+      "id": "mod.py.shape",
+      "kind": "module",
+      "name": "ShapETransformer structural port",
+      "path": "shap_e/src/mlx_shap_e/models/shape.py",
+      "symbols": [
+        "ShapETransformer",
+        "TransmitterEncoder",
+        "NeRSTF",
+        "ParamsProj"
+      ],
+      "summary": "Earlier structural MLX sketch of the encoder and renderer modules. The production runtime does not call it. cli/inspect/inspect_model.py imports a name (mlx_shape_data_structures) that is not this module."
+    },
+    {
+      "id": "mod.py.convert-text",
+      "kind": "module",
+      "name": "map_text300m_weights",
+      "path": "shap_e/src/mlx_shap_e/models/conversions/convert_text300m_to_mlx.py",
+      "summary": "Torch state-dict key remap into the MLX Text300M tree. Used by L0 checks and by the text300m exporter."
+    },
+    {
+      "id": "mod.py.golden",
+      "kind": "module",
+      "name": "runtime golden",
+      "path": "shap_e/src/mlx_shap_e/runtime_core/golden.py",
+      "summary": "Builds and compares the L1 summary JSON (token ids, embedding stats, sampler heads, mesh counts)."
+    },
+    {
+      "id": "mod.py.parity-tensors",
+      "kind": "module",
+      "name": "parity tensor dump",
+      "path": "shap_e/src/mlx_shap_e/runtime_core/parity_tensors.py",
+      "symbols": [
+        "run_mlx_parity_case",
+        "write_parity_dumps"
+      ],
+      "summary": "Runs one MLX case and writes python_*.npy for the L2 Swift compare."
+    },
+    {
+      "id": "mod.py.cache-recovery",
+      "kind": "module",
+      "name": "cache recovery",
+      "path": "shap_e/src/mlx_shap_e/utils/cache_recovery.py",
+      "summary": "Retries a torch download when the local shap-e cache file is corrupt. Used by exporters."
+    },
+    {
+      "id": "mod.swift.runtime",
+      "kind": "module",
+      "name": "ShapERuntime",
+      "path": "shap_e/swift/Sources/ShapERuntime/ShapERuntime.swift",
+      "symbols": [
+        "ShapERuntime",
+        "ShapEMeshResult",
+        "generate(prompt:)",
+        "generate(image:)"
+      ],
+      "summary": "Swift end-to-end runtime. Init loads text bundle families only. ensureImagePipeline loads clip_vision and image300m on first image call. generate(prompt:) with no batchSize returns one ShapEMeshResult and defaults seed to 0. generate(prompt:batchSize:) and generate(image:) return [ShapEMeshResult]; image batch defaults to 1 and seed to 0."
+    },
+    {
+      "id": "mod.swift.types",
+      "kind": "module",
+      "name": "RuntimeCoreTypes",
+      "path": "shap_e/swift/Sources/ShapERuntime/RuntimeCoreTypes.swift",
+      "symbols": [
+        "ArtifactVersionInfo",
+        "BoundingBox",
+        "LatentResult",
+        "MeshResult",
+        "MeshBatchResult"
+      ],
+      "summary": "Swift mirror of the Python runtime result types. MeshResult is what RuntimeWrapper re-wraps."
+    },
+    {
+      "id": "mod.swift.artifact-types",
+      "kind": "module",
+      "name": "RuntimeArtifactTypes",
+      "path": "shap_e/swift/Sources/ShapERuntime/RuntimeArtifactTypes.swift",
+      "symbols": [
+        "Text300MArtifact",
+        "Image300MArtifact",
+        "ClipVisionArtifact",
+        "RuntimeDiffusionConfig",
+        "DecoderParamsArtifact",
+        "RendererArtifact"
+      ],
+      "summary": "Loaded artifact structs. ClipTextArtifact lives in Models/embeddings/ClipTextArtifact.swift instead of this file."
+    },
+    {
+      "id": "mod.swift.bundle",
+      "kind": "module",
+      "name": "RuntimeArtifactBundle",
+      "path": "shap_e/swift/Sources/ShapERuntime/RuntimeArtifactBundle.swift",
+      "summary": "Swift reader for the same manifest and .bin layout. Loads every family, including clip_vision and image300m."
+    },
+    {
+      "id": "mod.swift.manifest",
+      "kind": "module",
+      "name": "RuntimeManifest",
+      "path": "shap_e/swift/Sources/ShapERuntime/RuntimeManifest.swift",
+      "symbols": [
+        "RuntimeArtifactManifest",
+        "ArtifactFamilyManifest",
+        "TensorEntry"
+      ],
+      "summary": "Codable manifest models."
+    },
+    {
+      "id": "mod.swift.blobs",
+      "kind": "module",
+      "name": "TensorBlobLoader",
+      "path": "shap_e/swift/Sources/ShapERuntime/TensorBlobLoader.swift",
+      "symbols": [
+        "RuntimeTensor",
+        "TensorDataType"
+      ],
+      "summary": "Reads a raw blob and checks dtype and shape against the manifest entry."
+    },
+    {
+      "id": "mod.swift.tokenizer",
+      "kind": "module",
+      "name": "ClipSimpleTokenizer",
+      "path": "shap_e/swift/Sources/ShapERuntime/Models/embeddings/ClipSimpleTokenizer.swift",
+      "summary": "Swift CLIP BPE tokenizer. Requires an explicit vocabulary URL."
+    },
+    {
+      "id": "mod.swift.clip-text",
+      "kind": "module",
+      "name": "ClipTextEmbedder",
+      "path": "shap_e/swift/Sources/ShapERuntime/Models/embeddings/ClipTextEmbedder.swift",
+      "summary": "Swift CLIP text tower over MLXArray."
+    },
+    {
+      "id": "mod.swift.clip-image",
+      "kind": "module",
+      "name": "ClipImageEmbedder",
+      "path": "shap_e/swift/Sources/ShapERuntime/Models/embeddings/ClipImageEmbedder.swift",
+      "summary": "Swift CLIP vision tower. Paired with ImageProcessor, which turns a CGImage into the 224 normalized tensor."
+    },
+    {
+      "id": "mod.swift.image-processor",
+      "kind": "module",
+      "name": "ImageProcessor",
+      "path": "shap_e/swift/Sources/ShapERuntime/ImageProcessor.swift",
+      "summary": "CGImage to a 224 CLIP tensor: shorter side scaled to 224, then center crop, then CLIP mean/std. Distinct from TripoSR's 512 preprocess."
+    },
+    {
+      "id": "mod.swift.text300m",
+      "kind": "module",
+      "name": "Text300MTransformer",
+      "path": "shap_e/swift/Sources/ShapERuntime/Text300MTransformer.swift",
+      "symbols": [
+        "Text300MTransformer",
+        "TimestepEmbedding"
+      ],
+      "summary": "Conforms to DiffusionTransformer so the Karras denoiser can call either text or image transformers."
+    },
+    {
+      "id": "mod.swift.image300m",
+      "kind": "module",
+      "name": "Image300MTransformer",
+      "path": "shap_e/swift/Sources/ShapERuntime/Image300MTransformer.swift",
+      "summary": "Image-conditioned diffusion transformer. Same DiffusionTransformer protocol as Text300M."
+    },
+    {
+      "id": "mod.swift.diffusion-step",
+      "kind": "module",
+      "name": "DiffusionStep",
+      "path": "shap_e/swift/Sources/ShapERuntime/DiffusionStep.swift",
+      "summary": "split vector, extract-into, and learned-range p_mean_variance."
+    },
+    {
+      "id": "mod.swift.karras",
+      "kind": "module",
+      "name": "KarrasSampler",
+      "path": "shap_e/swift/Sources/ShapERuntime/KarrasSampler.swift",
+      "symbols": [
+        "KarrasSampler",
+        "GaussianToKarrasDenoiser",
+        "KarrasSigmas",
+        "DiffusionTransformer"
+      ],
+      "summary": "Production Heun loop. Initial noise and churn noise use a per-call RandomState so overlapping sample() calls do not share the process-wide MLX PRNG. Progress callback can hand back an unscaled latent so ShapERuntime can extract a low-res preview mesh."
+    },
+    {
+      "id": "mod.swift.projector",
+      "kind": "module",
+      "name": "DecoderParamsProjector",
+      "path": "shap_e/swift/Sources/ShapERuntime/DecoderParamsProjector.swift",
+      "summary": "bottleneck_to_params port: tan2 or identity unwarp, projection, layer norm, bias, reshape. Init fails unless the parameter list consumes latent_ctx exactly."
+    },
+    {
+      "id": "mod.swift.renderer",
+      "kind": "module",
+      "name": "STFMeshRenderer",
+      "path": "shap_e/swift/Sources/ShapERuntime/STFMeshRenderer.swift",
+      "summary": "NeRSTF positional encoding, dynamic and static MLP layers, chunked field sampling, then marching cubes. Query chunks default to 65536 at the runtime API. Vertex evaluation inside the renderer is chunked (4096) to avoid GPU faults."
+    },
+    {
+      "id": "mod.swift.mc",
+      "kind": "module",
+      "name": "MarchingCubes",
+      "path": "shap_e/swift/Sources/ShapERuntime/MarchingCubes.swift",
+      "summary": "CPU marching cubes. Also used for sampling previews and as the TripoSR mesh backend when Metal is off."
+    },
+    {
+      "id": "mod.swift.metal-mc",
+      "kind": "module",
+      "name": "MetalMarchingCubes",
+      "path": "shap_e/swift/Sources/ShapERuntime/MetalMarchingCubes.swift",
+      "summary": "GPU marching cubes. Kernel source is MarchingCubes.metal, compiled as a package resource. Tables live in MCTable.swift."
+    },
+    {
+      "id": "mod.swift.mesh-export",
+      "kind": "module",
+      "name": "MeshExport",
+      "path": "shap_e/swift/Sources/ShapERuntime/MeshExport.swift",
+      "summary": "OBJ export with vertex colors (v x y z r g b). MeshTopology.swift reports connectivity stats."
+    },
+    {
+      "id": "mod.swift.shap-e-cli",
+      "kind": "module",
+      "name": "ShapECLI",
+      "path": "shap_e/swift/Sources/ShapECLI/main.swift",
+      "summary": "Executable. Generation CLI and the --parity dump used by L2. The root README still mentions an older tool name, something, under swift/something."
+    },
+    {
+      "id": "mod.py.tsr",
+      "kind": "module",
+      "name": "TSR",
+      "path": "TripoSR/tsr/system.py",
+      "summary": "Upstream system module. from_pretrained loads config plus model.ckpt. Wires image tokenizer, triplane tokenizer, backbone, post processor, decoder, and renderer. Product CLIs and the parity dump both construct this. They do not call each other."
+    },
+    {
+      "id": "mod.py.dino-tok",
+      "kind": "module",
+      "name": "DINOSingleImageTokenizer",
+      "path": "TripoSR/tsr/models/tokenizers/image.py",
+      "summary": "PyTorch DINO image tokenizer."
+    },
+    {
+      "id": "mod.py.triplane-tok",
+      "kind": "module",
+      "name": "Triplane1DTokenizer",
+      "path": "TripoSR/tsr/models/tokenizers/triplane.py",
+      "summary": "PyTorch learnable triplane tokens and detokenize."
+    },
+    {
+      "id": "mod.py.transformer",
+      "kind": "module",
+      "name": "Transformer1D",
+      "path": "TripoSR/tsr/models/transformer/transformer_1d.py",
+      "summary": "LRM backbone. Attention and BasicTransformerBlock live in the sibling files."
+    },
+    {
+      "id": "mod.py.nerf",
+      "kind": "module",
+      "name": "NeRFMLP and TriplaneNeRFRenderer",
+      "path": "TripoSR/tsr/models/nerf_renderer.py",
+      "summary": "Density and color query. TriplaneUpsampleNetwork and NeRFMLP are in network_utils.py."
+    },
+    {
+      "id": "mod.py.isosurface",
+      "kind": "module",
+      "name": "MarchingCubeHelper",
+      "path": "TripoSR/tsr/models/isosurface.py",
+      "summary": "Upstream mesh extract via torchmcubes. Used by run.py. Not used by the Swift runtime or by RuntimeWrapper."
+    },
+    {
+      "id": "mod.py.bake",
+      "kind": "module",
+      "name": "bake_texture",
+      "path": "TripoSR/tsr/bake_texture.py",
+      "summary": "Optional texture atlas baking for the Python product CLI. No Swift port."
+    },
+    {
+      "id": "mod.py.run",
+      "kind": "module",
+      "name": "run.py",
+      "path": "TripoSR/run.py",
+      "summary": "Official image-to-mesh CLI. Optional rembg and baked textures. Does not call Swift."
+    },
+    {
+      "id": "mod.py.gradio",
+      "kind": "module",
+      "name": "gradio_app.py",
+      "path": "TripoSR/gradio_app.py",
+      "summary": "Local Gradio UI over the same TSR stack. Not part of parity."
+    },
+    {
+      "id": "mod.py.export-tripo",
+      "kind": "module",
+      "name": "export_tripo_weights",
+      "path": "TripoSR/export_tripo_weights.py",
+      "summary": "Downloads the HF checkpoint and packs triposr_mlx.safetensors."
+    },
+    {
+      "id": "mod.py.convert-tripo",
+      "kind": "module",
+      "name": "convert_weights_to_mlx",
+      "path": "TripoSR/convert_weights_to_mlx.py",
+      "summary": "Remaps keys and layouts to triposr_swift_ready.safetensors."
+    },
+    {
+      "id": "mod.swift.triposr-model",
+      "kind": "module",
+      "name": "TripoSRModel",
+      "path": "TripoSR/swift/Sources/TripoSRRuntime/TripoSRModel.swift",
+      "symbols": [
+        "forwardTriplanes",
+        "evaluate",
+        "loadWeights",
+        "preprocessImage"
+      ],
+      "summary": "Swift module graph: DINOv2Model, Triplane1DTokenizer, LRMTransformer1D, TriplaneUpsampleNetwork, NeRFMLP, TripoSRRenderer. TripoSRRuntime.swift in the same folder is only a file header. There is no marching cubes here."
+    },
+    {
+      "id": "mod.swift.dino",
+      "kind": "module",
+      "name": "DINOv2Model",
+      "path": "TripoSR/swift/Sources/TripoSRRuntime/DINOv2Model.swift",
+      "summary": "Patch embed, attention, MLP, and layer stack. Files: DINOv2PatchEmbed, DINOv2Attention, DINOv2MLP, DINOv2Layer."
+    },
+    {
+      "id": "mod.swift.lrm",
+      "kind": "module",
+      "name": "LRMTransformer1D",
+      "path": "TripoSR/swift/Sources/TripoSRRuntime/LRMTransformer1D.swift",
+      "summary": "Cross-attention backbone. Pieces: LRMAttention, LRMBasicTransformerBlock, LRMFeedForward."
+    },
+    {
+      "id": "mod.swift.triplane",
+      "kind": "module",
+      "name": "Triplane1DTokenizer",
+      "path": "TripoSR/swift/Sources/TripoSRRuntime/Triplane1DTokenizer.swift",
+      "summary": "Learnable tokens plus detokenize. Upsample is TriplaneUpsampleNetwork.swift."
+    },
+    {
+      "id": "mod.swift.nerf",
+      "kind": "module",
+      "name": "NeRFMLP",
+      "path": "TripoSR/swift/Sources/TripoSRRuntime/NeRFMLP.swift",
+      "summary": "Decoder MLP. Queried by TripoSRRenderer.queryTriplane."
+    },
+    {
+      "id": "mod.swift.triposr-renderer",
+      "kind": "module",
+      "name": "TripoSRRenderer",
+      "path": "TripoSR/swift/Sources/TripoSRRuntime/TripoSRRenderer.swift",
+      "summary": "Triplane sample and NeRF query. Radius 0.87. Does not extract a mesh."
+    },
+    {
+      "id": "mod.swift.triposr-cli",
+      "kind": "module",
+      "name": "TripoSRCLI",
+      "path": "TripoSR/swift/Sources/TripoSRCLI/main.swift",
+      "summary": "Executable. --parity writes swift_*.npy from the shared parity inputs and the swift-ready weights. Build with xcodebuild so the MLX metallib is found."
+    },
+    {
+      "id": "mod.swift.facade",
+      "kind": "module",
+      "name": "ThreeDGenerationRuntime",
+      "path": "runtime_wrapper/Sources/RuntimeWrapper/ThreeDGenerationRuntime.swift",
+      "symbols": [
+        "ThreeDGenerationConfiguration.shapE",
+        "ThreeDGenerationConfiguration.tripoSR",
+        "generate(image:)",
+        "generate(prompt:)"
+      ],
+      "summary": "Selects a backend at init. Image generate works for both. Prompt generate throws promptUnsupported unless the backend is Shap-E. Defaults: Shap-E grid 128 and query batch 65536, TripoSR grid 256 and query batch 8192."
+    },
+    {
+      "id": "mod.swift.triposr-mesh",
+      "kind": "module",
+      "name": "TripoSRMeshRuntime",
+      "path": "runtime_wrapper/Sources/RuntimeWrapper/TripoSRMeshRuntime.swift",
+      "summary": "The only Swift path that turns TripoSR density into a mesh. Imports both TripoSRRuntime and ShapERuntime. Owns 512 gray-background preprocess."
+    },
+    {
+      "id": "mod.swift.mesh-result",
+      "kind": "module",
+      "name": "ThreeDMeshResult",
+      "path": "runtime_wrapper/Sources/RuntimeWrapper/ThreeDMeshResult.swift",
+      "summary": "Model-neutral mesh. Backed by ShapERuntime.MeshResult so both backends share one result type."
+    },
+    {
+      "id": "entry.py.pipeline",
+      "kind": "entrypoint",
+      "name": "run_text300m_mlx_pipeline",
+      "path": "shap_e/src/cli/run/run_text300m_mlx_pipeline.py",
+      "summary": "Python product CLI. Prompt to latent to mesh, writes obj, ply, npz, and metadata. Decodes latent[0] even though the runtime accepts a batch. Run from shap_e/src as python -m cli.run.run_text300m_mlx_pipeline."
+    },
+    {
+      "id": "entry.py.sample",
+      "kind": "entrypoint",
+      "name": "sample_text300m_karras_mlx",
+      "path": "shap_e/src/cli/run/sample_text300m_karras_mlx.py",
+      "summary": "Sampling-only CLI. Stops at the latent."
+    },
+    {
+      "id": "entry.py.decode",
+      "kind": "entrypoint",
+      "name": "decode_text300m_latent_to_mesh",
+      "path": "shap_e/src/cli/run/decode_text300m_latent_to_mesh.py",
+      "summary": "Latent npz to mesh. Has both the torch decoder path and the MLX renderer path."
+    },
+    {
+      "id": "entry.py.reference",
+      "kind": "entrypoint",
+      "name": "generate_text300m_reference_mesh",
+      "path": "shap_e/src/cli/run/generate_text300m_reference_mesh.py",
+      "summary": "Torch Shap-E reference mesh. Uses openai/shap-e sampling, then the local decode helper."
+    },
+    {
+      "id": "entry.py.export",
+      "kind": "entrypoint",
+      "name": "cli.export",
+      "path": "shap_e/src/cli/export",
+      "summary": "Per-family exporters: clip text, text300m, diffusion, decoder. The all-family writer is prepare_runtime_artifacts in offline_tools."
+    },
+    {
+      "id": "entry.mesh-ab",
+      "kind": "entrypoint",
+      "name": "run_mesh_ab.sh",
+      "path": "shap_e/scripts/run_mesh_ab.sh",
+      "summary": "CPU versus Metal marching-cubes A/B for holey Vision meshes. Writes shap_e/mesh_ab_smoke. Documented in shap_e/MESH_AB.md."
+    },
+    {
+      "id": "gate.coding-standards",
+      "kind": "gate",
+      "name": "Coding standards",
+      "path": "scripts/check_standards.py",
+      "summary": "Deterministic changed-file gate for docs/CODING-STANDARDS.md. Enforces one primary type in new production files, anti-growth in existing files, documentation on newly added public Swift/Python declarations, secret/personal-path scans, oversized files, and Markdown links. It intentionally has no file line-count rule. Verification is local Mac/Xcode only because the project targets macOS, iOS, and visionOS with MLX/Metal and local artifacts. --all reports the legacy baseline as warnings."
+    },
+    {
+      "id": "gate.l0",
+      "kind": "gate",
+      "name": "L0 Torch vs Python MLX",
+      "path": "shap_e/src/cli/check",
+      "summary": "Report-only metrics. Gate to re-run when re-exporting weights. Swift is not involved. Scripts: check_text300m_parity, check_mlx_diffusion_step_parity, check_mlx_karras_loop_parity, check_mlx_karras_model_output_parity, check_mlx_decoder_params_parity, check_mlx_mesh_renderer_parity."
+    },
+    {
+      "id": "gate.l1",
+      "kind": "gate",
+      "name": "L1 MLX golden",
+      "path": "tests/fixtures/runtime_golden_a_red_chair_steps2.json",
+      "summary": "Summary JSON for prompt 'a red chair', seed 7, steps 2, sigma 0.001 to 160, grid 16. Asserted by check_mlx_runtime_golden and, when MLX_SHAP_E_RUN_GOLDENS=1, tests/test_runtime_golden.py."
+    },
+    {
+      "id": "gate.l2",
+      "kind": "gate",
+      "name": "L2 Python MLX vs Swift",
+      "path": "shap_e/scripts/run_parity.sh",
+      "summary": "dump_mlx_swift_parity writes python_*.npy and case.json, ShapECLI --parity writes swift_*.npy, compare_mlx_swift_parity asserts. Tokens, CLIP, and sigmas are exact. Latent, pred_xstart, decoder params, and SDF need correlation at least 0.999. CPU mesh verts are correlated and faces are exact. Metal mesh check is counts plus bounding box. Dumps live in shap_e/parity."
+    },
+    {
+      "id": "gate.triposr",
+      "kind": "gate",
+      "name": "TripoSR Python vs Swift",
+      "path": "TripoSR/scripts/run_parity.sh",
+      "summary": "dump_python_parity.py uses TSR directly (not run.py), TripoSRCLI --parity, compare_parity.py. Scores correlation and mean abs on tokens, triplanes, density, and color. High correlation, not bit-exact. Does not compare meshes. Default image is examples/chair.png."
+    },
+    {
+      "id": "test.py.unit",
+      "kind": "test",
+      "name": "Python tests",
+      "path": "tests",
+      "summary": "test_check_standards.py, test_clip_text_embedder.py, test_download_shap_e_bundle.py, test_marching_cubes.py, test_mesh_batch_decode.py, test_runtime_golden.py, test_swift_test_runner.py."
+    },
+    {
+      "id": "test.swift.shap-e",
+      "kind": "test",
+      "name": "ShapERuntimeTests",
+      "path": "shap_e/swift/Tests/ShapERuntimeTests",
+      "summary": "Tokenizer, CLIP text embedder, decoder projector, diffusion step, text300m artifact and transformer, runtime bundle loading. Uses the stub bundle."
+    },
+    {
+      "id": "test.swift.triposr",
+      "kind": "test",
+      "name": "TripoSRRuntimeTests",
+      "path": "TripoSR/swift/Tests/TripoSRRuntimeTests/TripoSRRuntimeTests.swift",
+      "summary": "Swift unit tests for the TripoSR package."
+    },
+    {
+      "id": "test.swift.wrapper",
+      "kind": "test",
+      "name": "RuntimeWrapperTests",
+      "path": "runtime_wrapper/Tests/RuntimeWrapperTests/RuntimeWrapperTests.swift",
+      "summary": "Facade tests. Depends on RuntimeWrapper and MLX."
+    },
+    {
+      "id": "note.p2-batch",
+      "kind": "note",
+      "name": "P2 batch decode ambiguity",
+      "path": "BUGS.md",
+      "summary": "Open. MLXShapERuntime accepts a batch latent, and decode_latent_to_mesh_mx errors unless the batch has one mesh. The pipeline CLI explicitly decodes latent_result.latent[0]."
+    },
+    {
+      "id": "note.stale-lazy-init",
+      "kind": "note",
+      "name": "Stale package lazy imports",
+      "path": "shap_e/src/mlx_shap_e/__init__.py",
+      "summary": "The package __getattr__ map points at mlx_shap_e.diffusion.* and mlx_shap_e.embeddings.*, which are not packages. The real modules are under mlx_shap_e.models. runtime_core and runtime_artifacts lazy maps are correct. Import submodules directly."
+    },
+    {
+      "id": "note.triposr-docs",
+      "kind": "note",
+      "name": "TripoSR docs lag the wrapper",
+      "path": "TripoSR/SCRIPTS.md",
+      "summary": "TripoSR/README.md and SCRIPTS.md say a Swift mesh is not available and that meshing stays in run.py. That is true of TripoSRRuntime. RuntimeWrapper.TripoSRMeshRuntime now extracts a mesh with Shap-E marching cubes. Texture baking and rembg are still Python-only."
+    },
+    {
+      "id": "note.canonical-docs",
+      "kind": "note",
+      "name": "Canonical file and release documentation",
+      "path": "docs/FILE-STRUCTURE.md",
+      "summary": "docs/FILE-STRUCTURE.md is the canonical tracked/ignored path map and runtime-bundle format contract. docs/RELEASE-STATUS.md records pinned GitHub/Hugging Face revisions, validation evidence and limits, and publication gates. docs/CODING-STANDARDS.md is the detailed coding policy enforced locally by scripts/check_standards.py, scripts/verify.sh, and hooks. Update affected documents together when layout, revisions, bundle counts, standards, or validation scope changes."
+    },
+    {
+      "id": "tool.graph-update",
+      "kind": "entrypoint",
+      "name": "update_graph.py",
+      "path": "knowledge_graph/update_graph.py",
+      "summary": "Rebuilds graph.json from curated.json and a source scan. Agents run it before they finish a change. The pre-commit hook runs it on every commit."
+    },
+    {
+      "id": "tool.pre-commit",
+      "kind": "entrypoint",
+      "name": "pre-commit knowledge graph hook",
+      "path": ".githooks/pre-commit",
+      "summary": "Runs update_graph.py and stages graph.json and the knowledge-graph README on every commit. Active when core.hooksPath is .githooks."
+    },
+    {
+      "id": "note.graph-refresh",
+      "kind": "note",
+      "name": "Knowledge graph refresh",
+      "path": "AGENTS.md",
+      "summary": "Every agent is required to refresh the graph before finishing a change. The hook repeats that refresh at commit time, so a tool that skips the instruction still cannot commit a stale graph.json."
+    }
+  ],
+  "edges": [
+    {
+      "from": "repo",
+      "to": "sys.shap-e",
+      "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "sys.triposr",
+      "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "sys.wrapper",
+      "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "pkg.py.mlx-shap-e",
+      "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "test.py.unit",
+      "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "note.canonical-docs",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "ext.openai-shap-e",
+      "rel": "depends_on"
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "ext.openai-clip",
+      "rel": "depends_on"
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "pkg.py.mlx-shap-e",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "pkg.swift.shap-e",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "art.torch-cache",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "art.runtime-bundle",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "art.bpe",
+      "rel": "consumes"
+    },
+    {
+      "from": "sys.triposr",
+      "to": "ext.hf-triposr",
+      "rel": "depends_on"
+    },
+    {
+      "from": "sys.triposr",
+      "to": "pkg.swift.triposr",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.triposr",
+      "to": "pkg.swift.triposr-standalone",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.triposr",
+      "to": "mod.py.tsr",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.wrapper",
+      "to": "pkg.swift.wrapper",
+      "rel": "contains"
+    },
+    {
+      "from": "pkg.swift.wrapper",
+      "to": "pkg.swift.shap-e",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.swift.wrapper",
+      "to": "pkg.swift.triposr",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.swift.wrapper",
+      "to": "ext.mlx-swift",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.swift.shap-e",
+      "to": "ext.mlx-swift",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.swift.triposr",
+      "to": "ext.mlx-swift",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.swift.triposr-standalone",
+      "to": "ext.mlx-swift",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.swift.triposr",
+      "to": "pkg.swift.triposr-standalone",
+      "rel": "mirrors",
+      "note": "Same sources. Root package exists so consumers are not pointed at a directory named swift."
+    },
+    {
+      "from": "pkg.py.mlx-shap-e",
+      "to": "ext.mlx-python",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.py.mlx-shap-e",
+      "to": "ext.torch",
+      "rel": "depends_on",
+      "note": "Export, inspect, and L0 only. runtime_core inference is MLX."
+    },
+    {
+      "from": "pkg.py.mlx-shap-e",
+      "to": "ext.openai-shap-e",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.py.mlx-shap-e",
+      "to": "ext.openai-clip",
+      "rel": "depends_on"
+    },
+    {
+      "from": "stage.se.tokenize",
+      "to": "stage.se.text-embed",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.se.text-embed",
+      "to": "stage.se.text300m",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.se.text300m",
+      "to": "stage.se.karras",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.se.image-embed",
+      "to": "stage.se.image300m",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.se.image300m",
+      "to": "stage.se.karras",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.se.karras",
+      "to": "stage.se.project",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.se.project",
+      "to": "stage.se.sdf",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.se.sdf",
+      "to": "stage.se.mesh",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.ts.dino",
+      "to": "stage.ts.lrm",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.ts.tokens",
+      "to": "stage.ts.lrm",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.ts.lrm",
+      "to": "stage.ts.upsample",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.ts.upsample",
+      "to": "stage.ts.query",
+      "rel": "feeds"
+    },
+    {
+      "from": "stage.ts.query",
+      "to": "stage.ts.mesh",
+      "rel": "feeds",
+      "note": "Only through RuntimeWrapper. TripoSRRuntime stops at the query."
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "stage.se.text-embed",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "stage.se.karras",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "stage.se.project",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "stage.se.mesh",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "mod.py.bundle",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "mod.py.clip-text",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "mod.py.text300m",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "mod.py.karras",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "mod.py.decoder",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "mod.py.renderer",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.pipeline",
+      "to": "mod.py.types",
+      "rel": "produces"
+    },
+    {
+      "from": "mod.py.clip-text",
+      "to": "mod.py.tokenizer",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.karras",
+      "to": "mod.py.diffusion-step",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.karras",
+      "to": "mod.py.diffusion-config",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.py.renderer",
+      "to": "mod.py.mc",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.bundle",
+      "to": "mod.py.manifest",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.bundle",
+      "to": "art.runtime-bundle",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.py.exports",
+      "to": "art.torch-cache",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.py.exports",
+      "to": "art.runtime-bundle",
+      "rel": "produces"
+    },
+    {
+      "from": "mod.py.exports",
+      "to": "mod.py.convert-text",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.exports",
+      "to": "mod.py.cache-recovery",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.convert-text",
+      "to": "ext.openai-shap-e",
+      "rel": "consumes"
+    },
+    {
+      "from": "entry.py.pipeline",
+      "to": "mod.py.pipeline",
+      "rel": "calls"
+    },
+    {
+      "from": "entry.py.sample",
+      "to": "mod.py.karras",
+      "rel": "calls"
+    },
+    {
+      "from": "entry.py.decode",
+      "to": "mod.py.renderer",
+      "rel": "calls"
+    },
+    {
+      "from": "entry.py.reference",
+      "to": "ext.openai-shap-e",
+      "rel": "calls"
+    },
+    {
+      "from": "entry.py.export",
+      "to": "mod.py.exports",
+      "rel": "calls"
+    },
+    {
+      "from": "note.p2-batch",
+      "to": "mod.py.pipeline",
+      "rel": "calls"
+    },
+    {
+      "from": "note.p2-batch",
+      "to": "entry.py.pipeline",
+      "rel": "calls"
+    },
+    {
+      "from": "note.stale-lazy-init",
+      "to": "pkg.py.mlx-shap-e",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "stage.se.text-embed",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "stage.se.image-embed",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "stage.se.karras",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "stage.se.project",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "stage.se.mesh",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.bundle",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.tokenizer",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.clip-text",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.clip-image",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.text300m",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.image300m",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.karras",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.projector",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.swift.renderer",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.clip-image",
+      "to": "mod.swift.image-processor",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.karras",
+      "to": "mod.swift.diffusion-step",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.karras",
+      "to": "mod.swift.text300m",
+      "rel": "calls",
+      "note": "Through DiffusionTransformer. Image300MTransformer is the other conformer."
+    },
+    {
+      "from": "mod.swift.renderer",
+      "to": "mod.swift.mc",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.renderer",
+      "to": "mod.swift.metal-mc",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.bundle",
+      "to": "mod.swift.manifest",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.bundle",
+      "to": "mod.swift.blobs",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.bundle",
+      "to": "art.runtime-bundle",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.swift.tokenizer",
+      "to": "art.bpe",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.swift.shap-e-cli",
+      "to": "mod.swift.runtime",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.shap-e-cli",
+      "to": "mod.swift.mesh-export",
+      "rel": "calls"
+    },
+    {
+      "from": "pkg.swift.shap-e",
+      "to": "mod.swift.runtime",
+      "rel": "contains"
+    },
+    {
+      "from": "pkg.swift.shap-e",
+      "to": "mod.swift.shap-e-cli",
+      "rel": "contains"
+    },
+    {
+      "from": "test.swift.shap-e",
+      "to": "art.bundle-stub",
+      "rel": "consumes"
+    },
+    {
+      "from": "test.swift.shap-e",
+      "to": "pkg.swift.shap-e",
+      "rel": "validates"
+    },
+    {
+      "from": "mod.swift.tokenizer",
+      "to": "mod.py.tokenizer",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.clip-text",
+      "to": "mod.py.clip-text",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.text300m",
+      "to": "mod.py.text300m",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.diffusion-step",
+      "to": "mod.py.diffusion-step",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.karras",
+      "to": "mod.py.karras",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.projector",
+      "to": "mod.py.decoder",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.renderer",
+      "to": "mod.py.renderer",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.mc",
+      "to": "mod.py.mc",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.bundle",
+      "to": "mod.py.bundle",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.manifest",
+      "to": "mod.py.manifest",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.types",
+      "to": "mod.py.types",
+      "rel": "mirrors"
+    },
+    {
+      "from": "mod.swift.runtime",
+      "to": "mod.py.pipeline",
+      "rel": "ports",
+      "note": "Swift adds the image pipeline and lazy loading. Python runtime stays text-only."
+    },
+    {
+      "from": "mod.py.run",
+      "to": "mod.py.tsr",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.gradio",
+      "to": "mod.py.tsr",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.tsr",
+      "to": "mod.py.dino-tok",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.tsr",
+      "to": "mod.py.triplane-tok",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.tsr",
+      "to": "mod.py.transformer",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.tsr",
+      "to": "mod.py.nerf",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.tsr",
+      "to": "mod.py.isosurface",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.run",
+      "to": "mod.py.bake",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.py.tsr",
+      "to": "art.triposr-ckpt",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.py.tsr",
+      "to": "ext.torch",
+      "rel": "depends_on"
+    },
+    {
+      "from": "mod.py.export-tripo",
+      "to": "art.triposr-ckpt",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.py.export-tripo",
+      "to": "art.triposr-mlx",
+      "rel": "produces"
+    },
+    {
+      "from": "mod.py.convert-tripo",
+      "to": "art.triposr-mlx",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.py.convert-tripo",
+      "to": "art.triposr-swift",
+      "rel": "produces"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "stage.ts.dino",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "stage.ts.tokens",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "stage.ts.lrm",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "stage.ts.upsample",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "stage.ts.query",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "mod.swift.dino",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "mod.swift.triplane",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "mod.swift.lrm",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "mod.swift.nerf",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "mod.swift.triposr-renderer",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-model",
+      "to": "art.triposr-swift",
+      "rel": "consumes"
+    },
+    {
+      "from": "mod.swift.triposr-cli",
+      "to": "mod.swift.triposr-model",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.dino",
+      "to": "mod.py.dino-tok",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.triplane",
+      "to": "mod.py.triplane-tok",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.lrm",
+      "to": "mod.py.transformer",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.nerf",
+      "to": "mod.py.nerf",
+      "rel": "ports"
+    },
+    {
+      "from": "mod.swift.triposr-renderer",
+      "to": "mod.py.nerf",
+      "rel": "ports"
+    },
+    {
+      "from": "pkg.swift.triposr",
+      "to": "mod.swift.triposr-model",
+      "rel": "contains"
+    },
+    {
+      "from": "pkg.swift.triposr",
+      "to": "mod.swift.triposr-cli",
+      "rel": "contains"
+    },
+    {
+      "from": "test.swift.triposr",
+      "to": "pkg.swift.triposr-standalone",
+      "rel": "validates"
+    },
+    {
+      "from": "mod.swift.facade",
+      "to": "mod.swift.runtime",
+      "rel": "selects"
+    },
+    {
+      "from": "mod.swift.facade",
+      "to": "mod.swift.triposr-mesh",
+      "rel": "selects"
+    },
+    {
+      "from": "mod.swift.facade",
+      "to": "mod.swift.mesh-result",
+      "rel": "produces"
+    },
+    {
+      "from": "mod.swift.triposr-mesh",
+      "to": "mod.swift.triposr-model",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-mesh",
+      "to": "mod.swift.mc",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-mesh",
+      "to": "mod.swift.metal-mc",
+      "rel": "calls"
+    },
+    {
+      "from": "mod.swift.triposr-mesh",
+      "to": "stage.ts.mesh",
+      "rel": "implements"
+    },
+    {
+      "from": "mod.swift.mesh-result",
+      "to": "mod.swift.types",
+      "rel": "depends_on"
+    },
+    {
+      "from": "pkg.swift.wrapper",
+      "to": "mod.swift.facade",
+      "rel": "contains"
+    },
+    {
+      "from": "pkg.swift.wrapper",
+      "to": "mod.swift.triposr-mesh",
+      "rel": "contains"
+    },
+    {
+      "from": "test.swift.wrapper",
+      "to": "pkg.swift.wrapper",
+      "rel": "validates"
+    },
+    {
+      "from": "note.triposr-docs",
+      "to": "mod.swift.triposr-mesh",
+      "rel": "calls"
+    },
+    {
+      "from": "note.triposr-docs",
+      "to": "mod.py.run",
+      "rel": "calls"
+    },
+    {
+      "from": "gate.l0",
+      "to": "ext.openai-shap-e",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l0",
+      "to": "pkg.py.mlx-shap-e",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l0",
+      "to": "mod.py.text300m",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l0",
+      "to": "mod.py.diffusion-step",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l0",
+      "to": "mod.py.karras",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l0",
+      "to": "mod.py.decoder",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l0",
+      "to": "mod.py.renderer",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l1",
+      "to": "mod.py.golden",
+      "rel": "calls"
+    },
+    {
+      "from": "gate.l1",
+      "to": "mod.py.pipeline",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l1",
+      "to": "test.py.unit",
+      "rel": "validates"
+    },
+    {
+      "from": "gate.l2",
+      "to": "mod.py.parity-tensors",
+      "rel": "calls"
+    },
+    {
+      "from": "gate.l2",
+      "to": "mod.swift.shap-e-cli",
+      "rel": "calls"
+    },
+    {
+      "from": "gate.l2",
+      "to": "gate.l1",
+      "rel": "depends_on",
+      "note": "Same canonical case. L2 extends L1 with full tensors. It does not replace L0 or L1."
+    },
+    {
+      "from": "gate.triposr",
+      "to": "mod.py.tsr",
+      "rel": "calls"
+    },
+    {
+      "from": "gate.triposr",
+      "to": "mod.swift.triposr-cli",
+      "rel": "calls"
+    },
+    {
+      "from": "gate.triposr",
+      "to": "art.triposr-swift",
+      "rel": "consumes"
+    },
+    {
+      "from": "gate.triposr",
+      "to": "art.triposr-ckpt",
+      "rel": "consumes"
+    },
+    {
+      "from": "entry.mesh-ab",
+      "to": "mod.swift.mc",
+      "rel": "validates"
+    },
+    {
+      "from": "entry.mesh-ab",
+      "to": "mod.swift.metal-mc",
+      "rel": "validates"
+    },
+    {
+      "from": "art.niko-bundle",
+      "to": "art.runtime-bundle",
+      "rel": "mirrors",
+      "note": "Same contract, fewer families."
+    },
+    {
+      "from": "art.bundle-stub",
+      "to": "art.runtime-bundle",
+      "rel": "mirrors",
+      "note": "Same manifest shape, toy tensors."
+    },
+    {
+      "from": "art.hf-shap-e-mlx",
+      "to": "art.runtime-bundle",
+      "rel": "mirrors",
+      "note": "Private Hub distribution adds BPE, provenance, checksums, licenses, validation summaries, and the re-export driver around the same bundle payload."
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "art.hf-shap-e-mlx",
+      "rel": "contains"
+    },
+    {
+      "from": "note.canonical-docs",
+      "to": "art.runtime-bundle",
+      "rel": "mirrors",
+      "note": "Documents the format-v1 schema and local bundle layout."
+    },
+    {
+      "from": "note.canonical-docs",
+      "to": "art.hf-shap-e-mlx",
+      "rel": "mirrors",
+      "note": "Documents the pinned Hub tree, revisions, validation scope, and publication gates."
+    },
+    {
+      "from": "sys.shap-e",
+      "to": "sys.triposr",
+      "rel": "mirrors",
+      "note": "Independent products. They meet only inside RuntimeWrapper, and only because TripoSR mesh extraction reuses Shap-E marching cubes."
+    },
+    {
+      "from": "repo",
+      "to": "tool.graph-update",
+      "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "tool.pre-commit",
+      "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "gate.coding-standards",
+      "rel": "contains"
+    },
+    {
+      "from": "gate.coding-standards",
+      "to": "repo",
+      "rel": "validates"
+    },
+    {
+      "from": "tool.pre-commit",
+      "to": "gate.coding-standards",
+      "rel": "calls"
+    },
+    {
+      "from": "tool.pre-commit",
+      "to": "tool.graph-update",
+      "rel": "calls"
+    },
+    {
+      "from": "note.graph-refresh",
+      "to": "tool.graph-update",
+      "rel": "calls"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:apple-mlx-foundations}/shap_e/swift",
+            "name": "Debug ShapECLI (shap_e/swift)",
+            "target": "ShapECLI",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ShapECLI (shap_e/swift)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:apple-mlx-foundations}/shap_e/swift",
+            "name": "Release ShapECLI (shap_e/swift)",
+            "target": "ShapECLI",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ShapECLI (shap_e/swift)"
+        }
+    ]
+}
