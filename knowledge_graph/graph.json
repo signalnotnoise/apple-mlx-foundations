@@ -32,10 +32,129 @@
   "meta": {
     "generator": "knowledge_graph/update_graph.py",
     "curated_source": "knowledge_graph/curated.json",
-    "curated_nodes": 122,
-    "scanned_nodes": 74,
-    "edges": 370,
+    "curated_nodes": 124,
+    "scanned_nodes": 193,
+    "edges": 561,
     "uncurated_files": [
+      "TRELLIS/app.py",
+      "TRELLIS/app_text.py",
+      "TRELLIS/dataset_toolkits/blender_script/render.py",
+      "TRELLIS/dataset_toolkits/build_metadata.py",
+      "TRELLIS/dataset_toolkits/calculate_aesthetic_scores.py",
+      "TRELLIS/dataset_toolkits/datasets/3D-FUTURE.py",
+      "TRELLIS/dataset_toolkits/datasets/ABO.py",
+      "TRELLIS/dataset_toolkits/datasets/HSSD.py",
+      "TRELLIS/dataset_toolkits/datasets/ObjaverseXL.py",
+      "TRELLIS/dataset_toolkits/datasets/Toys4k.py",
+      "TRELLIS/dataset_toolkits/download.py",
+      "TRELLIS/dataset_toolkits/encode_latent.py",
+      "TRELLIS/dataset_toolkits/encode_ss_latent.py",
+      "TRELLIS/dataset_toolkits/extract_feature.py",
+      "TRELLIS/dataset_toolkits/render.py",
+      "TRELLIS/dataset_toolkits/render_cond.py",
+      "TRELLIS/dataset_toolkits/setup.sh",
+      "TRELLIS/dataset_toolkits/stat_latent.py",
+      "TRELLIS/dataset_toolkits/utils.py",
+      "TRELLIS/dataset_toolkits/voxelize.py",
+      "TRELLIS/example.py",
+      "TRELLIS/example_multi_image.py",
+      "TRELLIS/example_text.py",
+      "TRELLIS/example_variant.py",
+      "TRELLIS/setup.sh",
+      "TRELLIS/train.py",
+      "TRELLIS/trellis/__init__.py",
+      "TRELLIS/trellis/datasets/__init__.py",
+      "TRELLIS/trellis/datasets/components.py",
+      "TRELLIS/trellis/datasets/sparse_feat2render.py",
+      "TRELLIS/trellis/datasets/sparse_structure.py",
+      "TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "TRELLIS/trellis/datasets/structured_latent.py",
+      "TRELLIS/trellis/datasets/structured_latent2render.py",
+      "TRELLIS/trellis/models/__init__.py",
+      "TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "TRELLIS/trellis/models/sparse_structure_flow.py",
+      "TRELLIS/trellis/models/sparse_structure_vae.py",
+      "TRELLIS/trellis/models/structured_latent_flow.py",
+      "TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "TRELLIS/trellis/models/structured_latent_vae/decoder_rf.py",
+      "TRELLIS/trellis/models/structured_latent_vae/encoder.py",
+      "TRELLIS/trellis/modules/attention/__init__.py",
+      "TRELLIS/trellis/modules/attention/full_attn.py",
+      "TRELLIS/trellis/modules/attention/modules.py",
+      "TRELLIS/trellis/modules/norm.py",
+      "TRELLIS/trellis/modules/sparse/__init__.py",
+      "TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "TRELLIS/trellis/modules/sparse/attention/full_attn.py",
+      "TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "TRELLIS/trellis/modules/sparse/attention/serialized_attn.py",
+      "TRELLIS/trellis/modules/sparse/attention/windowed_attn.py",
+      "TRELLIS/trellis/modules/sparse/basic.py",
+      "TRELLIS/trellis/modules/sparse/conv/__init__.py",
+      "TRELLIS/trellis/modules/sparse/conv/conv_spconv.py",
+      "TRELLIS/trellis/modules/sparse/conv/conv_torchsparse.py",
+      "TRELLIS/trellis/modules/sparse/linear.py",
+      "TRELLIS/trellis/modules/sparse/nonlinearity.py",
+      "TRELLIS/trellis/modules/sparse/norm.py",
+      "TRELLIS/trellis/modules/sparse/spatial.py",
+      "TRELLIS/trellis/modules/sparse/transformer/__init__.py",
+      "TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "TRELLIS/trellis/modules/spatial.py",
+      "TRELLIS/trellis/modules/transformer/__init__.py",
+      "TRELLIS/trellis/modules/transformer/blocks.py",
+      "TRELLIS/trellis/modules/transformer/modulated.py",
+      "TRELLIS/trellis/modules/utils.py",
+      "TRELLIS/trellis/pipelines/__init__.py",
+      "TRELLIS/trellis/pipelines/base.py",
+      "TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "TRELLIS/trellis/pipelines/samplers/base.py",
+      "TRELLIS/trellis/pipelines/samplers/classifier_free_guidance_mixin.py",
+      "TRELLIS/trellis/pipelines/samplers/flow_euler.py",
+      "TRELLIS/trellis/pipelines/samplers/guidance_interval_mixin.py",
+      "TRELLIS/trellis/pipelines/trellis_image_to_3d.py",
+      "TRELLIS/trellis/pipelines/trellis_text_to_3d.py",
+      "TRELLIS/trellis/renderers/__init__.py",
+      "TRELLIS/trellis/renderers/gaussian_render.py",
+      "TRELLIS/trellis/renderers/mesh_renderer.py",
+      "TRELLIS/trellis/renderers/octree_renderer.py",
+      "TRELLIS/trellis/renderers/sh_utils.py",
+      "TRELLIS/trellis/representations/__init__.py",
+      "TRELLIS/trellis/representations/gaussian/__init__.py",
+      "TRELLIS/trellis/representations/gaussian/gaussian_model.py",
+      "TRELLIS/trellis/representations/gaussian/general_utils.py",
+      "TRELLIS/trellis/representations/mesh/__init__.py",
+      "TRELLIS/trellis/representations/mesh/cube2mesh.py",
+      "TRELLIS/trellis/representations/mesh/utils_cube.py",
+      "TRELLIS/trellis/representations/octree/__init__.py",
+      "TRELLIS/trellis/representations/octree/octree_dfs.py",
+      "TRELLIS/trellis/representations/radiance_field/__init__.py",
+      "TRELLIS/trellis/representations/radiance_field/strivec.py",
+      "TRELLIS/trellis/trainers/__init__.py",
+      "TRELLIS/trellis/trainers/base.py",
+      "TRELLIS/trellis/trainers/basic.py",
+      "TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "TRELLIS/trellis/trainers/flow_matching/mixins/classifier_free_guidance.py",
+      "TRELLIS/trellis/trainers/flow_matching/mixins/image_conditioned.py",
+      "TRELLIS/trellis/trainers/flow_matching/mixins/text_conditioned.py",
+      "TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "TRELLIS/trellis/trainers/utils.py",
+      "TRELLIS/trellis/trainers/vae/sparse_structure_vae.py",
+      "TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "TRELLIS/trellis/utils/__init__.py",
+      "TRELLIS/trellis/utils/data_utils.py",
+      "TRELLIS/trellis/utils/dist_utils.py",
+      "TRELLIS/trellis/utils/elastic_utils.py",
+      "TRELLIS/trellis/utils/general_utils.py",
+      "TRELLIS/trellis/utils/grad_clip_utils.py",
+      "TRELLIS/trellis/utils/loss_utils.py",
+      "TRELLIS/trellis/utils/postprocessing_utils.py",
+      "TRELLIS/trellis/utils/random_utils.py",
+      "TRELLIS/trellis/utils/render_utils.py",
       "TripoSR/scripts/compare_parity.py",
       "TripoSR/scripts/dump_python_parity.py",
       "TripoSR/swift/Sources/TripoSRRuntime/DINOv2Attention.swift",
@@ -135,6 +254,20 @@
       "kind": "system",
       "name": "TripoSR",
       "summary": "Feedforward image-to-3D model. DINOv2 tokens cross-attend into a triplane, a small NeRF MLP queries density and color. The Swift package stops at that query. Mesh extraction for TripoSR lives in RuntimeWrapper and reuses Shap-E marching cubes.",
+      "origin": "curated"
+    },
+    {
+      "id": "sys.trellis",
+      "kind": "system",
+      "name": "TRELLIS (port in progress)",
+      "summary": "Microsoft TRELLIS image-to-3D (MIT), vendored as the TRELLIS submodule from the signalnotnoise fork. MLX port lives in trellis_mlx/ and has not started Gate 0; plan and gates in trellis_mlx/MIGRATION_CHECKLIST.md. First target is TRELLIS-image-large: DINOv2 features, sparse-structure flow, SLat flow, mesh decoder.",
+      "origin": "curated"
+    },
+    {
+      "id": "ext.hf-trellis-image-large",
+      "kind": "external",
+      "name": "microsoft/TRELLIS-image-large",
+      "summary": "Hugging Face fp16 checkpoints plus pipeline.json (MIT). First port target; oracle weights for Gate 0-2 parity.",
       "origin": "curated"
     },
     {
@@ -1196,6 +1329,1466 @@
       "origin": "curated"
     },
     {
+      "id": "scan:TRELLIS/app.py",
+      "kind": "module",
+      "name": "app.py",
+      "path": "TRELLIS/app.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "start_session",
+        "end_session",
+        "preprocess_image",
+        "preprocess_images",
+        "pack_state",
+        "unpack_state",
+        "get_seed",
+        "image_to_3d",
+        "extract_glb",
+        "extract_gaussian",
+        "prepare_multi_example",
+        "split_image"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/app_text.py",
+      "kind": "module",
+      "name": "app_text.py",
+      "path": "TRELLIS/app_text.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "start_session",
+        "end_session",
+        "pack_state",
+        "unpack_state",
+        "get_seed",
+        "text_to_3d",
+        "extract_glb",
+        "extract_gaussian"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/blender_script/render.py",
+      "kind": "module",
+      "name": "render.py",
+      "path": "TRELLIS/dataset_toolkits/blender_script/render.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "init_render",
+        "init_nodes",
+        "init_scene",
+        "init_camera",
+        "init_lighting",
+        "load_object",
+        "delete_invisible_objects",
+        "split_mesh_normal",
+        "delete_custom_normals",
+        "override_material",
+        "unhide_all_objects",
+        "convert_to_meshes",
+        "triangulate_meshes",
+        "scene_bbox",
+        "normalize_scene",
+        "get_transform_matrix",
+        "main"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/build_metadata.py",
+      "kind": "module",
+      "name": "build_metadata.py",
+      "path": "TRELLIS/dataset_toolkits/build_metadata.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "get_first_directory",
+        "need_process"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/calculate_aesthetic_scores.py",
+      "kind": "module",
+      "name": "calculate_aesthetic_scores.py",
+      "path": "TRELLIS/dataset_toolkits/calculate_aesthetic_scores.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "get_aesthetic_model"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/datasets/3D-FUTURE.py",
+      "kind": "module",
+      "name": "3D-FUTURE.py",
+      "path": "TRELLIS/dataset_toolkits/datasets/3D-FUTURE.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "add_args",
+        "get_metadata",
+        "download",
+        "foreach_instance"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/datasets/ABO.py",
+      "kind": "module",
+      "name": "ABO.py",
+      "path": "TRELLIS/dataset_toolkits/datasets/ABO.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "add_args",
+        "get_metadata",
+        "download",
+        "foreach_instance"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/datasets/HSSD.py",
+      "kind": "module",
+      "name": "HSSD.py",
+      "path": "TRELLIS/dataset_toolkits/datasets/HSSD.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "add_args",
+        "get_metadata",
+        "download",
+        "foreach_instance"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/datasets/ObjaverseXL.py",
+      "kind": "module",
+      "name": "ObjaverseXL.py",
+      "path": "TRELLIS/dataset_toolkits/datasets/ObjaverseXL.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "add_args",
+        "get_metadata",
+        "download",
+        "foreach_instance"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/datasets/Toys4k.py",
+      "kind": "module",
+      "name": "Toys4k.py",
+      "path": "TRELLIS/dataset_toolkits/datasets/Toys4k.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "add_args",
+        "get_metadata",
+        "download",
+        "foreach_instance"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/download.py",
+      "kind": "module",
+      "name": "download.py",
+      "path": "TRELLIS/dataset_toolkits/download.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/encode_latent.py",
+      "kind": "module",
+      "name": "encode_latent.py",
+      "path": "TRELLIS/dataset_toolkits/encode_latent.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/encode_ss_latent.py",
+      "kind": "module",
+      "name": "encode_ss_latent.py",
+      "path": "TRELLIS/dataset_toolkits/encode_ss_latent.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "get_voxels"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/extract_feature.py",
+      "kind": "module",
+      "name": "extract_feature.py",
+      "path": "TRELLIS/dataset_toolkits/extract_feature.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "get_data"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/render.py",
+      "kind": "module",
+      "name": "render.py",
+      "path": "TRELLIS/dataset_toolkits/render.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "_install_blender",
+        "_render"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/render_cond.py",
+      "kind": "module",
+      "name": "render_cond.py",
+      "path": "TRELLIS/dataset_toolkits/render_cond.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "_install_blender",
+        "_render_cond"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/setup.sh",
+      "kind": "entrypoint",
+      "name": "setup.sh",
+      "path": "TRELLIS/dataset_toolkits/setup.sh",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/stat_latent.py",
+      "kind": "module",
+      "name": "stat_latent.py",
+      "path": "TRELLIS/dataset_toolkits/stat_latent.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/utils.py",
+      "kind": "module",
+      "name": "utils.py",
+      "path": "TRELLIS/dataset_toolkits/utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "get_file_hash",
+        "radical_inverse",
+        "halton_sequence",
+        "hammersley_sequence",
+        "sphere_hammersley_sequence"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/dataset_toolkits/voxelize.py",
+      "kind": "module",
+      "name": "voxelize.py",
+      "path": "TRELLIS/dataset_toolkits/voxelize.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "_voxelize"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/example.py",
+      "kind": "module",
+      "name": "example.py",
+      "path": "TRELLIS/example.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/example_multi_image.py",
+      "kind": "module",
+      "name": "example_multi_image.py",
+      "path": "TRELLIS/example_multi_image.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/example_text.py",
+      "kind": "module",
+      "name": "example_text.py",
+      "path": "TRELLIS/example_text.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/example_variant.py",
+      "kind": "module",
+      "name": "example_variant.py",
+      "path": "TRELLIS/example_variant.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/setup.sh",
+      "kind": "entrypoint",
+      "name": "setup.sh",
+      "path": "TRELLIS/setup.sh",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/train.py",
+      "kind": "module",
+      "name": "train.py",
+      "path": "TRELLIS/train.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "find_ckpt",
+        "setup_rng",
+        "get_model_summary",
+        "main"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/datasets/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/datasets/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "__getattr__"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/datasets/components.py",
+      "kind": "module",
+      "name": "components.py",
+      "path": "TRELLIS/trellis/datasets/components.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "StandardDatasetBase",
+        "TextConditionedMixin",
+        "ImageConditionedMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/datasets/sparse_feat2render.py",
+      "kind": "module",
+      "name": "sparse_feat2render.py",
+      "path": "TRELLIS/trellis/datasets/sparse_feat2render.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseFeat2Render"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/datasets/sparse_structure.py",
+      "kind": "module",
+      "name": "sparse_structure.py",
+      "path": "TRELLIS/trellis/datasets/sparse_structure.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseStructure"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "kind": "module",
+      "name": "sparse_structure_latent.py",
+      "path": "TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseStructureLatentVisMixin",
+        "SparseStructureLatent",
+        "TextConditionedSparseStructureLatent",
+        "ImageConditionedSparseStructureLatent"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/datasets/structured_latent.py",
+      "kind": "module",
+      "name": "structured_latent.py",
+      "path": "TRELLIS/trellis/datasets/structured_latent.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLatVisMixin",
+        "SLat",
+        "TextConditionedSLat",
+        "ImageConditionedSLat"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/datasets/structured_latent2render.py",
+      "kind": "module",
+      "name": "structured_latent2render.py",
+      "path": "TRELLIS/trellis/datasets/structured_latent2render.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLat2Render",
+        "Slat2RenderGeo"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/models/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "__getattr__",
+        "from_pretrained"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "kind": "module",
+      "name": "sparse_elastic_mixin.py",
+      "path": "TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseTransformerElasticMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/sparse_structure_flow.py",
+      "kind": "module",
+      "name": "sparse_structure_flow.py",
+      "path": "TRELLIS/trellis/models/sparse_structure_flow.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "TimestepEmbedder",
+        "SparseStructureFlowModel"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/sparse_structure_vae.py",
+      "kind": "module",
+      "name": "sparse_structure_vae.py",
+      "path": "TRELLIS/trellis/models/sparse_structure_vae.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "norm_layer",
+        "ResBlock3d",
+        "DownsampleBlock3d",
+        "UpsampleBlock3d",
+        "SparseStructureEncoder",
+        "SparseStructureDecoder"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "kind": "module",
+      "name": "structured_latent_flow.py",
+      "path": "TRELLIS/trellis/models/structured_latent_flow.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseResBlock3d",
+        "SLatFlowModel",
+        "ElasticSLatFlowModel"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "kind": "module",
+      "name": "base.py",
+      "path": "TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "block_attn_config",
+        "SparseTransformerBase"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "kind": "module",
+      "name": "decoder_gs.py",
+      "path": "TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLatGaussianDecoder",
+        "ElasticSLatGaussianDecoder"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "kind": "module",
+      "name": "decoder_mesh.py",
+      "path": "TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseSubdivideBlock3d",
+        "SLatMeshDecoder",
+        "ElasticSLatMeshDecoder"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_rf.py",
+      "kind": "module",
+      "name": "decoder_rf.py",
+      "path": "TRELLIS/trellis/models/structured_latent_vae/decoder_rf.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLatRadianceFieldDecoder",
+        "ElasticSLatRadianceFieldDecoder"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/models/structured_latent_vae/encoder.py",
+      "kind": "module",
+      "name": "encoder.py",
+      "path": "TRELLIS/trellis/models/structured_latent_vae/encoder.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLatEncoder",
+        "ElasticSLatEncoder"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/attention/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/modules/attention/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "__from_env",
+        "set_backend",
+        "set_debug"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/attention/full_attn.py",
+      "kind": "module",
+      "name": "full_attn.py",
+      "path": "TRELLIS/trellis/modules/attention/full_attn.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "_naive_sdpa",
+        "scaled_dot_product_attention",
+        "scaled_dot_product_attention",
+        "scaled_dot_product_attention",
+        "scaled_dot_product_attention"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/attention/modules.py",
+      "kind": "module",
+      "name": "modules.py",
+      "path": "TRELLIS/trellis/modules/attention/modules.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "MultiHeadRMSNorm",
+        "RotaryPositionEmbedder",
+        "MultiHeadAttention"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/norm.py",
+      "kind": "module",
+      "name": "norm.py",
+      "path": "TRELLIS/trellis/modules/norm.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "LayerNorm32",
+        "GroupNorm32",
+        "ChannelLayerNorm32"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/modules/sparse/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "__from_env",
+        "set_backend",
+        "set_debug",
+        "set_attn",
+        "__getattr__"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/attention/full_attn.py",
+      "kind": "module",
+      "name": "full_attn.py",
+      "path": "TRELLIS/trellis/modules/sparse/attention/full_attn.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "sparse_scaled_dot_product_attention",
+        "sparse_scaled_dot_product_attention",
+        "sparse_scaled_dot_product_attention",
+        "sparse_scaled_dot_product_attention",
+        "sparse_scaled_dot_product_attention",
+        "sparse_scaled_dot_product_attention",
+        "sparse_scaled_dot_product_attention"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "kind": "module",
+      "name": "modules.py",
+      "path": "TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseMultiHeadRMSNorm",
+        "SparseMultiHeadAttention"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/attention/serialized_attn.py",
+      "kind": "module",
+      "name": "serialized_attn.py",
+      "path": "TRELLIS/trellis/modules/sparse/attention/serialized_attn.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SerializeMode",
+        "calc_serialization",
+        "sparse_serialized_scaled_dot_product_self_attention"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/attention/windowed_attn.py",
+      "kind": "module",
+      "name": "windowed_attn.py",
+      "path": "TRELLIS/trellis/modules/sparse/attention/windowed_attn.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "calc_window_partition",
+        "sparse_windowed_scaled_dot_product_self_attention"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/basic.py",
+      "kind": "module",
+      "name": "basic.py",
+      "path": "TRELLIS/trellis/modules/sparse/basic.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseTensor",
+        "sparse_batch_broadcast",
+        "sparse_batch_op",
+        "sparse_cat",
+        "sparse_unbind"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/conv/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/modules/sparse/conv/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "__from_env"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/conv/conv_spconv.py",
+      "kind": "module",
+      "name": "conv_spconv.py",
+      "path": "TRELLIS/trellis/modules/sparse/conv/conv_spconv.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseConv3d",
+        "SparseInverseConv3d"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/conv/conv_torchsparse.py",
+      "kind": "module",
+      "name": "conv_torchsparse.py",
+      "path": "TRELLIS/trellis/modules/sparse/conv/conv_torchsparse.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseConv3d",
+        "SparseInverseConv3d"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/linear.py",
+      "kind": "module",
+      "name": "linear.py",
+      "path": "TRELLIS/trellis/modules/sparse/linear.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseLinear"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/nonlinearity.py",
+      "kind": "module",
+      "name": "nonlinearity.py",
+      "path": "TRELLIS/trellis/modules/sparse/nonlinearity.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseReLU",
+        "SparseSiLU",
+        "SparseGELU",
+        "SparseActivation"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/norm.py",
+      "kind": "module",
+      "name": "norm.py",
+      "path": "TRELLIS/trellis/modules/sparse/norm.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseGroupNorm",
+        "SparseLayerNorm",
+        "SparseGroupNorm32",
+        "SparseLayerNorm32"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/spatial.py",
+      "kind": "module",
+      "name": "spatial.py",
+      "path": "TRELLIS/trellis/modules/sparse/spatial.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseDownsample",
+        "SparseUpsample",
+        "SparseSubdivide"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/transformer/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/modules/sparse/transformer/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "kind": "module",
+      "name": "blocks.py",
+      "path": "TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseFeedForwardNet",
+        "SparseTransformerBlock",
+        "SparseTransformerCrossBlock"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "kind": "module",
+      "name": "modulated.py",
+      "path": "TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "ModulatedSparseTransformerBlock",
+        "ModulatedSparseTransformerCrossBlock"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/spatial.py",
+      "kind": "module",
+      "name": "spatial.py",
+      "path": "TRELLIS/trellis/modules/spatial.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "pixel_shuffle_3d",
+        "patchify",
+        "unpatchify"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/transformer/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/modules/transformer/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/transformer/blocks.py",
+      "kind": "module",
+      "name": "blocks.py",
+      "path": "TRELLIS/trellis/modules/transformer/blocks.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "AbsolutePositionEmbedder",
+        "FeedForwardNet",
+        "TransformerBlock",
+        "TransformerCrossBlock"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/transformer/modulated.py",
+      "kind": "module",
+      "name": "modulated.py",
+      "path": "TRELLIS/trellis/modules/transformer/modulated.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "ModulatedTransformerBlock",
+        "ModulatedTransformerCrossBlock"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/modules/utils.py",
+      "kind": "module",
+      "name": "utils.py",
+      "path": "TRELLIS/trellis/modules/utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "convert_module_to_f16",
+        "convert_module_to_f32",
+        "zero_module",
+        "scale_module",
+        "modulate"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/pipelines/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "from_pretrained"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/base.py",
+      "kind": "module",
+      "name": "base.py",
+      "path": "TRELLIS/trellis/pipelines/base.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "Pipeline"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/samplers/base.py",
+      "kind": "module",
+      "name": "base.py",
+      "path": "TRELLIS/trellis/pipelines/samplers/base.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "Sampler"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/samplers/classifier_free_guidance_mixin.py",
+      "kind": "module",
+      "name": "classifier_free_guidance_mixin.py",
+      "path": "TRELLIS/trellis/pipelines/samplers/classifier_free_guidance_mixin.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "ClassifierFreeGuidanceSamplerMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/samplers/flow_euler.py",
+      "kind": "module",
+      "name": "flow_euler.py",
+      "path": "TRELLIS/trellis/pipelines/samplers/flow_euler.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "FlowEulerSampler",
+        "FlowEulerCfgSampler",
+        "FlowEulerGuidanceIntervalSampler"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/samplers/guidance_interval_mixin.py",
+      "kind": "module",
+      "name": "guidance_interval_mixin.py",
+      "path": "TRELLIS/trellis/pipelines/samplers/guidance_interval_mixin.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "GuidanceIntervalSamplerMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/trellis_image_to_3d.py",
+      "kind": "module",
+      "name": "trellis_image_to_3d.py",
+      "path": "TRELLIS/trellis/pipelines/trellis_image_to_3d.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "TrellisImageTo3DPipeline"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/pipelines/trellis_text_to_3d.py",
+      "kind": "module",
+      "name": "trellis_text_to_3d.py",
+      "path": "TRELLIS/trellis/pipelines/trellis_text_to_3d.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "TrellisTextTo3DPipeline"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/renderers/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "__getattr__"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/renderers/gaussian_render.py",
+      "kind": "module",
+      "name": "gaussian_render.py",
+      "path": "TRELLIS/trellis/renderers/gaussian_render.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "intrinsics_to_projection",
+        "render",
+        "GaussianRenderer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/renderers/mesh_renderer.py",
+      "kind": "module",
+      "name": "mesh_renderer.py",
+      "path": "TRELLIS/trellis/renderers/mesh_renderer.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "intrinsics_to_projection",
+        "MeshRenderer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/renderers/octree_renderer.py",
+      "kind": "module",
+      "name": "octree_renderer.py",
+      "path": "TRELLIS/trellis/renderers/octree_renderer.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "intrinsics_to_projection",
+        "render",
+        "OctreeRenderer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/renderers/sh_utils.py",
+      "kind": "module",
+      "name": "sh_utils.py",
+      "path": "TRELLIS/trellis/renderers/sh_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "eval_sh",
+        "RGB2SH",
+        "SH2RGB"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/representations/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/gaussian/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/representations/gaussian/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/gaussian/gaussian_model.py",
+      "kind": "module",
+      "name": "gaussian_model.py",
+      "path": "TRELLIS/trellis/representations/gaussian/gaussian_model.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "Gaussian"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/gaussian/general_utils.py",
+      "kind": "module",
+      "name": "general_utils.py",
+      "path": "TRELLIS/trellis/representations/gaussian/general_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "inverse_sigmoid",
+        "PILtoTorch",
+        "get_expon_lr_func",
+        "strip_lowerdiag",
+        "strip_symmetric",
+        "build_rotation",
+        "build_scaling_rotation",
+        "safe_state"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/mesh/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/representations/mesh/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/mesh/cube2mesh.py",
+      "kind": "module",
+      "name": "cube2mesh.py",
+      "path": "TRELLIS/trellis/representations/mesh/cube2mesh.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "MeshExtractResult",
+        "SparseFeatures2Mesh"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/mesh/utils_cube.py",
+      "kind": "module",
+      "name": "utils_cube.py",
+      "path": "TRELLIS/trellis/representations/mesh/utils_cube.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "construct_dense_grid",
+        "construct_voxel_grid",
+        "cubes_to_verts",
+        "sparse_cube2verts",
+        "get_dense_attrs",
+        "get_defomed_verts"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/octree/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/representations/octree/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/octree/octree_dfs.py",
+      "kind": "module",
+      "name": "octree_dfs.py",
+      "path": "TRELLIS/trellis/representations/octree/octree_dfs.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "DfsOctree"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/radiance_field/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/representations/radiance_field/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/representations/radiance_field/strivec.py",
+      "kind": "module",
+      "name": "strivec.py",
+      "path": "TRELLIS/trellis/representations/radiance_field/strivec.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "Strivec"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/trainers/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "__getattr__"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/base.py",
+      "kind": "module",
+      "name": "base.py",
+      "path": "TRELLIS/trellis/trainers/base.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "Trainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/basic.py",
+      "kind": "module",
+      "name": "basic.py",
+      "path": "TRELLIS/trellis/trainers/basic.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "BasicTrainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "kind": "module",
+      "name": "flow_matching.py",
+      "path": "TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "FlowMatchingTrainer",
+        "FlowMatchingCFGTrainer",
+        "TextConditionedFlowMatchingCFGTrainer",
+        "ImageConditionedFlowMatchingCFGTrainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/classifier_free_guidance.py",
+      "kind": "module",
+      "name": "classifier_free_guidance.py",
+      "path": "TRELLIS/trellis/trainers/flow_matching/mixins/classifier_free_guidance.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "ClassifierFreeGuidanceMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/image_conditioned.py",
+      "kind": "module",
+      "name": "image_conditioned.py",
+      "path": "TRELLIS/trellis/trainers/flow_matching/mixins/image_conditioned.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "ImageConditionedMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/text_conditioned.py",
+      "kind": "module",
+      "name": "text_conditioned.py",
+      "path": "TRELLIS/trellis/trainers/flow_matching/mixins/text_conditioned.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "TextConditionedMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "kind": "module",
+      "name": "sparse_flow_matching.py",
+      "path": "TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseFlowMatchingTrainer",
+        "SparseFlowMatchingCFGTrainer",
+        "TextConditionedSparseFlowMatchingCFGTrainer",
+        "ImageConditionedSparseFlowMatchingCFGTrainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/utils.py",
+      "kind": "module",
+      "name": "utils.py",
+      "path": "TRELLIS/trellis/trainers/utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "make_master_params",
+        "unflatten_master_params",
+        "model_params_to_master_params",
+        "master_params_to_model_params",
+        "model_grads_to_master_grads",
+        "zero_grad",
+        "LinearWarmupLRScheduler"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/vae/sparse_structure_vae.py",
+      "kind": "module",
+      "name": "sparse_structure_vae.py",
+      "path": "TRELLIS/trellis/trainers/vae/sparse_structure_vae.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SparseStructureVaeTrainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "kind": "module",
+      "name": "structured_latent_vae_gaussian.py",
+      "path": "TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLatVaeGaussianTrainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "kind": "module",
+      "name": "structured_latent_vae_mesh_dec.py",
+      "path": "TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLatVaeMeshDecoderTrainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "kind": "module",
+      "name": "structured_latent_vae_rf_dec.py",
+      "path": "TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "SLatVaeRadianceFieldDecoderTrainer"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/__init__.py",
+      "kind": "module",
+      "name": "__init__.py",
+      "path": "TRELLIS/trellis/utils/__init__.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/data_utils.py",
+      "kind": "module",
+      "name": "data_utils.py",
+      "path": "TRELLIS/trellis/utils/data_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "recursive_to_device",
+        "load_balanced_group_indices",
+        "cycle",
+        "ResumableSampler",
+        "BalancedResumableSampler"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/dist_utils.py",
+      "kind": "module",
+      "name": "dist_utils.py",
+      "path": "TRELLIS/trellis/utils/dist_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "setup_dist",
+        "read_file_dist",
+        "unwrap_dist",
+        "master_first",
+        "local_master_first"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/elastic_utils.py",
+      "kind": "module",
+      "name": "elastic_utils.py",
+      "path": "TRELLIS/trellis/utils/elastic_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "MemoryController",
+        "LinearMemoryController",
+        "ElasticModule",
+        "ElasticModuleMixin"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/general_utils.py",
+      "kind": "module",
+      "name": "general_utils.py",
+      "path": "TRELLIS/trellis/utils/general_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "_dict_merge",
+        "dict_merge",
+        "dict_foreach",
+        "dict_reduce",
+        "dict_any",
+        "dict_all",
+        "dict_flatten",
+        "nested_contexts",
+        "make_grid",
+        "notes_on_image",
+        "save_image_with_notes",
+        "atol",
+        "rtol",
+        "indent"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/grad_clip_utils.py",
+      "kind": "module",
+      "name": "grad_clip_utils.py",
+      "path": "TRELLIS/trellis/utils/grad_clip_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "AdaptiveGradClipper"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/loss_utils.py",
+      "kind": "module",
+      "name": "loss_utils.py",
+      "path": "TRELLIS/trellis/utils/loss_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "smooth_l1_loss",
+        "l1_loss",
+        "l2_loss",
+        "gaussian",
+        "create_window",
+        "psnr",
+        "ssim",
+        "_ssim",
+        "lpips",
+        "normal_angle"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/postprocessing_utils.py",
+      "kind": "module",
+      "name": "postprocessing_utils.py",
+      "path": "TRELLIS/trellis/utils/postprocessing_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "_fill_holes",
+        "postprocess_mesh",
+        "parametrize_mesh",
+        "bake_texture",
+        "to_glb",
+        "simplify_gs"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/random_utils.py",
+      "kind": "module",
+      "name": "random_utils.py",
+      "path": "TRELLIS/trellis/utils/random_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "radical_inverse",
+        "halton_sequence",
+        "hammersley_sequence",
+        "sphere_hammersley_sequence"
+      ]
+    },
+    {
+      "id": "scan:TRELLIS/trellis/utils/render_utils.py",
+      "kind": "module",
+      "name": "render_utils.py",
+      "path": "TRELLIS/trellis/utils/render_utils.py",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "yaw_pitch_r_fov_to_extrinsics_intrinsics",
+        "get_renderer",
+        "render_frames",
+        "render_video",
+        "render_multiview",
+        "render_snapshot"
+      ]
+    },
+    {
       "id": "scan:TripoSR/scripts/compare_parity.py",
       "kind": "module",
       "name": "compare_parity.py",
@@ -2173,6 +3766,18 @@
       "from": "repo",
       "to": "sys.triposr",
       "rel": "contains",
+      "origin": "curated"
+    },
+    {
+      "from": "repo",
+      "to": "sys.trellis",
+      "rel": "contains",
+      "origin": "curated"
+    },
+    {
+      "from": "sys.trellis",
+      "to": "ext.hf-trellis-image-large",
+      "rel": "depends_on",
       "origin": "curated"
     },
     {
@@ -3757,6 +5362,1140 @@
       "from": "test.py.unit",
       "to": "scan:tests/test_swift_test_runner.py",
       "rel": "contains",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/__init__.py",
+      "to": "scan:TRELLIS/trellis/pipelines/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/__init__.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/__init__.py",
+      "to": "scan:TRELLIS/trellis/utils/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/__init__.py",
+      "to": "scan:TRELLIS/trellis/datasets/sparse_structure.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/__init__.py",
+      "to": "scan:TRELLIS/trellis/datasets/sparse_feat2render.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/__init__.py",
+      "to": "scan:TRELLIS/trellis/datasets/structured_latent2render.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/__init__.py",
+      "to": "scan:TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/__init__.py",
+      "to": "scan:TRELLIS/trellis/datasets/structured_latent.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_feat2render.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_feat2render.py",
+      "to": "scan:TRELLIS/trellis/datasets/components.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_structure.py",
+      "to": "scan:TRELLIS/trellis/datasets/components.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_structure.py",
+      "to": "scan:TRELLIS/trellis/representations/octree/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_structure.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "to": "scan:TRELLIS/trellis/representations/octree/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "to": "scan:TRELLIS/trellis/datasets/components.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/sparse_structure_latent.py",
+      "to": "scan:TRELLIS/trellis/models/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/structured_latent.py",
+      "to": "scan:TRELLIS/trellis/datasets/components.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/structured_latent.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/structured_latent.py",
+      "to": "scan:TRELLIS/trellis/models/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/structured_latent.py",
+      "to": "scan:TRELLIS/trellis/utils/render_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/structured_latent.py",
+      "to": "scan:TRELLIS/trellis/utils/data_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/structured_latent2render.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/datasets/structured_latent2render.py",
+      "to": "scan:TRELLIS/trellis/datasets/components.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_structure_vae.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_structure_flow.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "to": "scan:TRELLIS/trellis/utils/elastic_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/sparse_structure_flow.py",
+      "to": "scan:TRELLIS/trellis/modules/utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/sparse_structure_flow.py",
+      "to": "scan:TRELLIS/trellis/modules/transformer/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/sparse_structure_flow.py",
+      "to": "scan:TRELLIS/trellis/modules/spatial.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/sparse_structure_vae.py",
+      "to": "scan:TRELLIS/trellis/modules/norm.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/sparse_structure_vae.py",
+      "to": "scan:TRELLIS/trellis/modules/spatial.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/sparse_structure_vae.py",
+      "to": "scan:TRELLIS/trellis/modules/utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "to": "scan:TRELLIS/trellis/modules/utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "to": "scan:TRELLIS/trellis/modules/transformer/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "to": "scan:TRELLIS/trellis/modules/norm.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/transformer/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_structure_flow.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_flow.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/encoder.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_rf.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/__init__.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "to": "scan:TRELLIS/trellis/modules/utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "to": "scan:TRELLIS/trellis/modules/transformer/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/transformer/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "to": "scan:TRELLIS/trellis/utils/random_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_gs.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "to": "scan:TRELLIS/trellis/modules/utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "to": "scan:TRELLIS/trellis/representations/mesh/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_mesh.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_rf.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_rf.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/decoder_rf.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/encoder.py",
+      "to": "scan:TRELLIS/trellis/models/structured_latent_vae/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/models/structured_latent_vae/encoder.py",
+      "to": "scan:TRELLIS/trellis/models/sparse_elastic_mixin.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/attention/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/attention/full_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/attention/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/attention/modules.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/attention/modules.py",
+      "to": "scan:TRELLIS/trellis/modules/attention/full_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/norm.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/nonlinearity.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/linear.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/conv/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/spatial.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/full_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/serialized_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/windowed_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/full_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/serialized_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/windowed_attn.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/attention/modules.py",
+      "to": "scan:TRELLIS/trellis/modules/attention/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/conv/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/conv/conv_torchsparse.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/conv/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/conv/conv_spconv.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/linear.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/nonlinearity.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "to": "scan:TRELLIS/trellis/modules/norm.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/attention/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "to": "scan:TRELLIS/trellis/modules/norm.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/sparse/transformer/modulated.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/transformer/blocks.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/transformer/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/transformer/blocks.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/transformer/__init__.py",
+      "to": "scan:TRELLIS/trellis/modules/transformer/modulated.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/transformer/blocks.py",
+      "to": "scan:TRELLIS/trellis/modules/attention/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/transformer/blocks.py",
+      "to": "scan:TRELLIS/trellis/modules/norm.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/transformer/modulated.py",
+      "to": "scan:TRELLIS/trellis/modules/attention/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/transformer/modulated.py",
+      "to": "scan:TRELLIS/trellis/modules/norm.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/modules/transformer/modulated.py",
+      "to": "scan:TRELLIS/trellis/modules/transformer/blocks.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/__init__.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/__init__.py",
+      "to": "scan:TRELLIS/trellis/pipelines/trellis_image_to_3d.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/__init__.py",
+      "to": "scan:TRELLIS/trellis/pipelines/trellis_text_to_3d.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/base.py",
+      "to": "scan:TRELLIS/trellis/models/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/flow_euler.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/samplers/flow_euler.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/samplers/flow_euler.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/classifier_free_guidance_mixin.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/samplers/flow_euler.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/guidance_interval_mixin.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/trellis_image_to_3d.py",
+      "to": "scan:TRELLIS/trellis/pipelines/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/trellis_image_to_3d.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/trellis_text_to_3d.py",
+      "to": "scan:TRELLIS/trellis/pipelines/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/pipelines/trellis_text_to_3d.py",
+      "to": "scan:TRELLIS/trellis/pipelines/samplers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "to": "scan:TRELLIS/trellis/renderers/octree_renderer.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "to": "scan:TRELLIS/trellis/renderers/gaussian_render.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "to": "scan:TRELLIS/trellis/renderers/mesh_renderer.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/renderers/gaussian_render.py",
+      "to": "scan:TRELLIS/trellis/representations/gaussian/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/renderers/gaussian_render.py",
+      "to": "scan:TRELLIS/trellis/renderers/sh_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/renderers/mesh_renderer.py",
+      "to": "scan:TRELLIS/trellis/representations/mesh/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/renderers/octree_renderer.py",
+      "to": "scan:TRELLIS/trellis/representations/octree/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/radiance_field/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/octree/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/gaussian/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/mesh/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/gaussian/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/gaussian/gaussian_model.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/gaussian/gaussian_model.py",
+      "to": "scan:TRELLIS/trellis/representations/gaussian/general_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/mesh/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/mesh/cube2mesh.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/mesh/cube2mesh.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/mesh/cube2mesh.py",
+      "to": "scan:TRELLIS/trellis/representations/mesh/utils_cube.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/octree/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/octree/octree_dfs.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/radiance_field/__init__.py",
+      "to": "scan:TRELLIS/trellis/representations/radiance_field/strivec.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/representations/radiance_field/strivec.py",
+      "to": "scan:TRELLIS/trellis/representations/octree/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "to": "scan:TRELLIS/trellis/trainers/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "to": "scan:TRELLIS/trellis/trainers/vae/sparse_structure_vae.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "to": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "to": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "to": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/__init__.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/base.py",
+      "to": "scan:TRELLIS/trellis/trainers/utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/base.py",
+      "to": "scan:TRELLIS/trellis/utils/general_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/base.py",
+      "to": "scan:TRELLIS/trellis/utils/data_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/basic.py",
+      "to": "scan:TRELLIS/trellis/trainers/utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/basic.py",
+      "to": "scan:TRELLIS/trellis/trainers/base.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/basic.py",
+      "to": "scan:TRELLIS/trellis/utils/general_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/basic.py",
+      "to": "scan:TRELLIS/trellis/utils/dist_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/basic.py",
+      "to": "scan:TRELLIS/trellis/utils/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "to": "scan:TRELLIS/trellis/pipelines/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "to": "scan:TRELLIS/trellis/utils/general_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/classifier_free_guidance.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/text_conditioned.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/image_conditioned.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/classifier_free_guidance.py",
+      "to": "scan:TRELLIS/trellis/utils/general_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/classifier_free_guidance.py",
+      "to": "scan:TRELLIS/trellis/pipelines/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/image_conditioned.py",
+      "to": "scan:TRELLIS/trellis/utils/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/text_conditioned.py",
+      "to": "scan:TRELLIS/trellis/utils/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "to": "scan:TRELLIS/trellis/utils/general_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "to": "scan:TRELLIS/trellis/utils/data_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/flow_matching.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/classifier_free_guidance.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/text_conditioned.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/flow_matching/sparse_flow_matching.py",
+      "to": "scan:TRELLIS/trellis/trainers/flow_matching/mixins/image_conditioned.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/sparse_structure_vae.py",
+      "to": "scan:TRELLIS/trellis/trainers/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "to": "scan:TRELLIS/trellis/trainers/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_gaussian.py",
+      "to": "scan:TRELLIS/trellis/utils/loss_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "to": "scan:TRELLIS/trellis/trainers/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "to": "scan:TRELLIS/trellis/utils/loss_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_mesh_dec.py",
+      "to": "scan:TRELLIS/trellis/utils/data_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "to": "scan:TRELLIS/trellis/trainers/basic.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "to": "scan:TRELLIS/trellis/modules/sparse/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/trainers/vae/structured_latent_vae_rf_dec.py",
+      "to": "scan:TRELLIS/trellis/utils/loss_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/utils/postprocessing_utils.py",
+      "to": "scan:TRELLIS/trellis/utils/random_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/utils/postprocessing_utils.py",
+      "to": "scan:TRELLIS/trellis/utils/render_utils.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/utils/postprocessing_utils.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/utils/postprocessing_utils.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/utils/render_utils.py",
+      "to": "scan:TRELLIS/trellis/renderers/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/utils/render_utils.py",
+      "to": "scan:TRELLIS/trellis/representations/__init__.py",
+      "rel": "calls",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:TRELLIS/trellis/utils/render_utils.py",
+      "to": "scan:TRELLIS/trellis/utils/random_utils.py",
+      "rel": "calls",
       "origin": "scan"
     },
     {

@@ -12,6 +12,8 @@ and publication gates live in [Release status](RELEASE-STATUS.md).
 |---|---|---|
 | This GitHub repository | Source code, tests, docs, the tiny random-weight Swift fixture | Git commit on `main` |
 | `TripoSR/` | TripoSR Python product and a second Swift package | The separate `signalnotnoise/TripoSR` Git repository, pinned here as a submodule |
+| `TRELLIS/` | Upstream Microsoft TRELLIS (MIT) reference implementation | The `signalnotnoise/TRELLIS` fork, pinned here as a submodule |
+| `trellis_mlx/` | TRELLIS → MLX port workspace (plan, export, parity, future Swift runtime) | This repository |
 | Local ignored directories | Downloaded Torch checkpoints, the full converted `runtime_bundle/`, virtual environments, Swift/Xcode build products, parity dumps, mesh outputs | Nothing; regenerate or download them |
 | Hugging Face `signalNotNoise/shap-e-mlx` | Downloadable copy of the full Shap-E runtime bundle, BPE vocabulary, provenance, checksums, licenses, and validation summaries | Hugging Face Git revision |
 
@@ -40,7 +42,7 @@ apple-mlx-foundations/
 ├── README.md                         Project overview and quick start
 ├── pyproject.toml                    Python package, Ruff, and dependency config
 ├── .swift-format                     Swift formatting/lint configuration
-├── .gitmodules                       TripoSR submodule URL
+├── .gitmodules                       TripoSR + TRELLIS submodule URLs
 ├── .githooks/pre-commit              Standards check + knowledge-graph refresh
 ├── .github/
 │   ├── copilot-instructions.md       Pointer to AGENTS.md
@@ -63,6 +65,8 @@ apple-mlx-foundations/
 ├── runtime_wrapper/                  Optional Swift model-selection facade
 ├── shap_e/                           Shap-E Python, Swift, CLI, scripts, docs
 ├── tests/                            Python tests and committed golden fixture
+├── trellis_mlx/                      TRELLIS → MLX port workspace (plan in README)
+├── TRELLIS/                          Git submodule (fork of microsoft/TRELLIS)
 └── TripoSR/                          Git submodule; see its own tree below
 ```
 

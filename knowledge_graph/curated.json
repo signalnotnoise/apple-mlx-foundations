@@ -50,6 +50,18 @@
       "summary": "Feedforward image-to-3D model. DINOv2 tokens cross-attend into a triplane, a small NeRF MLP queries density and color. The Swift package stops at that query. Mesh extraction for TripoSR lives in RuntimeWrapper and reuses Shap-E marching cubes."
     },
     {
+      "id": "sys.trellis",
+      "kind": "system",
+      "name": "TRELLIS (port in progress)",
+      "summary": "Microsoft TRELLIS image-to-3D (MIT), vendored as the TRELLIS submodule from the signalnotnoise fork. MLX port lives in trellis_mlx/ and has not started Gate 0; plan and gates in trellis_mlx/MIGRATION_CHECKLIST.md. First target is TRELLIS-image-large: DINOv2 features, sparse-structure flow, SLat flow, mesh decoder."
+    },
+    {
+      "id": "ext.hf-trellis-image-large",
+      "kind": "external",
+      "name": "microsoft/TRELLIS-image-large",
+      "summary": "Hugging Face fp16 checkpoints plus pipeline.json (MIT). First port target; oracle weights for Gate 0-2 parity."
+    },
+    {
       "id": "sys.wrapper",
       "kind": "system",
       "name": "RuntimeWrapper",
@@ -999,6 +1011,16 @@
       "from": "repo",
       "to": "sys.triposr",
       "rel": "contains"
+    },
+    {
+      "from": "repo",
+      "to": "sys.trellis",
+      "rel": "contains"
+    },
+    {
+      "from": "sys.trellis",
+      "to": "ext.hf-trellis-image-large",
+      "rel": "depends_on"
     },
     {
       "from": "repo",

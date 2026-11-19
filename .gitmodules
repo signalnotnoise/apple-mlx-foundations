@@ -1,3 +1,6 @@
 [submodule "TripoSR"]
 	path = TripoSR
 	url = git@github.com:signalnotnoise/TripoSR.git
+[submodule "TRELLIS"]
+	path = TRELLIS
+	url = https://github.com/signalnotnoise/TRELLIS.git
