@@ -44,3 +44,22 @@ let runtime = try ThreeDGenerationRuntime(
 ```
 
 Shap-E accepts image or text input. TripoSR accepts image input only.
+
+The TripoSR backend loads `triposr_swift_ready.safetensors` (the canonical
+converted TripoSR weights; see `TripoSR/SCRIPTS.md`).
+
+## Tests
+
+```bash
+cd runtime_wrapper && swift test
+```
+
+`TripoSRMeshRuntimeTests` additionally runs a real-weights end-to-end mesh
+test when both variables point at existing files (otherwise it skips; a
+skip is not a pass):
+
+```bash
+TRIPOSR_WEIGHTS_PATH=../TripoSR/triposr_weights/triposr_swift_ready.safetensors \
+TRIPOSR_IMAGE_PATH=../TripoSR/examples/chair.png \
+swift test --filter TripoSRMeshRuntimeTests
+```

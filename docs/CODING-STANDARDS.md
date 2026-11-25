@@ -140,8 +140,8 @@ Policy text alone is not enforcement. This repository uses layered checks:
 | Local standards checker | `scripts/check_standards.py` | Deterministic changed-file checks for primary types, new public API docs, secrets/paths, oversized binaries, and Markdown links |
 | Formatters/linters | Ruff and Xcode's `swift-format` where available | Mechanical style and common defects |
 | Pre-commit hook | `.githooks/pre-commit` | Fast local feedback plus knowledge-graph refresh |
-| Unified verification | `scripts/verify.sh` | Standards, graph, Python tests, Swift tests, and wrapper build |
-| Local full verification | `scripts/verify.sh` on a Mac/Xcode host | Python tests, macOS Swift tests, RuntimeWrapper build, and iOS/visionOS compile checks |
+| Unified verification | `scripts/verify.sh` | Standards, graph, Python tests, Swift tests, and wrapper build/tests |
+| Local full verification | `scripts/verify.sh` on a Mac/Xcode host | Python tests, macOS Swift tests, RuntimeWrapper build/tests, and iOS/visionOS compile checks |
 | Review | Pull-request template and human/agent review | Simplicity, root cause, design, documentation quality, and risk judgment |
 
 This repository deliberately does **not** use GitHub Actions. Its code,
@@ -196,7 +196,7 @@ python3 scripts/check_standards.py --changed
 python3 scripts/check_standards.py --all
 
 # Full local verification: root Python tests, macOS Swift tests,
-# RuntimeWrapper build, and iOS/visionOS compile checks
+# RuntimeWrapper build/tests, and iOS/visionOS compile checks
 ./scripts/verify.sh
 
 # Fast verification without Swift suites

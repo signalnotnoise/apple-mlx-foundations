@@ -6,7 +6,8 @@
 #
 # --quick runs standards, graph freshness, Ruff, focused Python tests, and
 # swift-format diagnostics for changed Swift files. Full mode additionally
-# runs the root Python suite, the Swift test suite, and RuntimeWrapper build.
+# runs the root Python suite, the Swift test suites, and RuntimeWrapper
+# build and tests.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -107,6 +108,11 @@ echo "==> ShapERuntime tests"
 
 echo "==> RuntimeWrapper build"
 (cd runtime_wrapper && swift build)
+
+echo "==> RuntimeWrapper tests"
+# The real-weights TripoSR mesh test skips unless TRIPOSR_WEIGHTS_PATH and
+# TRIPOSR_IMAGE_PATH are set; set them to count it as evidence.
+(cd runtime_wrapper && swift test)
 
 echo "==> Apple platform builds (iOS and visionOS)"
 DERIVED_ROOT="${TMPDIR:-/tmp}/apple-mlx-foundations-derived"

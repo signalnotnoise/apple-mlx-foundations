@@ -3,7 +3,7 @@
 Architectural map of this repo. The picture below is curated. Counts and [`graph.json`](graph.json) are regenerated from the tree.
 
 <!-- knowledge-graph:generated:start -->
-122 curated nodes, 74 scanned nodes, 370 edges. 74 source files have no curated node. 0 curated paths are missing on disk.
+121 curated nodes, 75 scanned nodes, 370 edges. 75 source files have no curated node. 0 curated paths are missing on disk.
 Regenerate with `python3 knowledge_graph/update_graph.py`. The pre-commit hook runs that command and stages the result.
 <!-- knowledge-graph:generated:end -->
 

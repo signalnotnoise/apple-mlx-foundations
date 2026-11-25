@@ -32,8 +32,8 @@
   "meta": {
     "generator": "knowledge_graph/update_graph.py",
     "curated_source": "knowledge_graph/curated.json",
-    "curated_nodes": 122,
-    "scanned_nodes": 74,
+    "curated_nodes": 121,
+    "scanned_nodes": 75,
     "edges": 370,
     "uncurated_files": [
       "TripoSR/scripts/compare_parity.py",
@@ -52,6 +52,7 @@
       "TripoSR/tsr/models/transformer/basic_transformer_block.py",
       "TripoSR/tsr/utils.py",
       "knowledge_graph/install_hooks.sh",
+      "runtime_wrapper/Tests/RuntimeWrapperTests/TripoSRMeshRuntimeTests.swift",
       "scripts/verify.sh",
       "shap_e/install.sh",
       "shap_e/scripts/run_image_parity.sh",
@@ -1104,7 +1105,7 @@
       "kind": "gate",
       "name": "TripoSR Python vs Swift",
       "path": "TripoSR/scripts/run_parity.sh",
-      "summary": "dump_python_parity.py uses TSR directly (not run.py), TripoSRCLI --parity, compare_parity.py. Scores correlation and mean abs on tokens, triplanes, density, and color. High correlation, not bit-exact. Does not compare meshes. Default image is examples/chair.png.",
+      "summary": "dump_python_parity.py uses TSR directly (not run.py), TripoSRCLI --parity, compare_parity.py. Scores correlation and mean abs on tokens, triplanes, density, and color. High correlation, not bit-exact. Does not compare meshes; mesh-stage evidence is RuntimeWrapper's env-gated TripoSRMeshRuntimeTests. Default image is examples/chair.png.",
       "origin": "curated"
     },
     {
@@ -1128,7 +1129,7 @@
       "kind": "test",
       "name": "TripoSRRuntimeTests",
       "path": "TripoSR/swift/Tests/TripoSRRuntimeTests/TripoSRRuntimeTests.swift",
-      "summary": "Swift unit tests for the TripoSR package.",
+      "summary": "Swift unit tests for the TripoSR package: ImageNet preprocess values, tokenizer round-trip, renderer shapes/activation ranges, loader failure on missing weights. Run via xcodebuild (plain swift test lacks the MLX metallib).",
       "origin": "curated"
     },
     {
@@ -1136,7 +1137,7 @@
       "kind": "test",
       "name": "RuntimeWrapperTests",
       "path": "runtime_wrapper/Tests/RuntimeWrapperTests/RuntimeWrapperTests.swift",
-      "summary": "Facade tests. Depends on RuntimeWrapper and MLX.",
+      "summary": "Facade and TripoSR mesh tests. TripoSRMeshRuntimeTests is env-gated (TRIPOSR_WEIGHTS_PATH/TRIPOSR_IMAGE_PATH) and runs the real weights end to end: finite in-bbox vertices, RGBA colors, zero invalid/non-manifold faces. verify.sh full mode runs the suite; the mesh test skips without the env vars.",
       "origin": "curated"
     },
     {
@@ -1153,14 +1154,6 @@
       "name": "Stale package lazy imports",
       "path": "shap_e/src/mlx_shap_e/__init__.py",
       "summary": "The package __getattr__ map points at mlx_shap_e.diffusion.* and mlx_shap_e.embeddings.*, which are not packages. The real modules are under mlx_shap_e.models. runtime_core and runtime_artifacts lazy maps are correct. Import submodules directly.",
-      "origin": "curated"
-    },
-    {
-      "id": "note.triposr-docs",
-      "kind": "note",
-      "name": "TripoSR docs lag the wrapper",
-      "path": "TripoSR/SCRIPTS.md",
-      "summary": "TripoSR/README.md and SCRIPTS.md say a Swift mesh is not available and that meshing stays in run.py. That is true of TripoSRRuntime. RuntimeWrapper.TripoSRMeshRuntime now extracts a mesh with Shap-E marching cubes. Texture baking and rembg are still Python-only.",
       "origin": "curated"
     },
     {
@@ -1397,6 +1390,20 @@
       "path": "knowledge_graph/install_hooks.sh",
       "origin": "scan",
       "summary": "Source file discovered by the filesystem scan. It has no curated summary yet."
+    },
+    {
+      "id": "scan:runtime_wrapper/Tests/RuntimeWrapperTests/TripoSRMeshRuntimeTests.swift",
+      "kind": "test",
+      "name": "TripoSRMeshRuntimeTests.swift",
+      "path": "runtime_wrapper/Tests/RuntimeWrapperTests/TripoSRMeshRuntimeTests.swift",
+      "origin": "scan",
+      "summary": "Source file discovered by the filesystem scan. It has no curated summary yet.",
+      "symbols": [
+        "TripoSRMeshRuntimeTests",
+        "requiredFileURL",
+        "loadCGImage",
+        "testRealWeightsProduceFiniteColoredMesh"
+      ]
     },
     {
       "id": "scan:scripts/verify.sh",
@@ -3117,18 +3124,6 @@
       "origin": "curated"
     },
     {
-      "from": "note.triposr-docs",
-      "to": "mod.swift.triposr-mesh",
-      "rel": "calls",
-      "origin": "curated"
-    },
-    {
-      "from": "note.triposr-docs",
-      "to": "mod.py.run",
-      "rel": "calls",
-      "origin": "curated"
-    },
-    {
       "from": "gate.l0",
       "to": "ext.openai-shap-e",
       "rel": "validates",
@@ -3420,6 +3415,12 @@
     {
       "from": "sys.triposr",
       "to": "scan:TripoSR/tsr/utils.py",
+      "rel": "contains",
+      "origin": "scan"
+    },
+    {
+      "from": "pkg.swift.wrapper",
+      "to": "scan:runtime_wrapper/Tests/RuntimeWrapperTests/TripoSRMeshRuntimeTests.swift",
       "rel": "contains",
       "origin": "scan"
     },
@@ -3852,6 +3853,12 @@
     {
       "from": "mod.swift.triposr-mesh",
       "to": "pkg.swift.triposr",
+      "rel": "depends_on",
+      "origin": "scan"
+    },
+    {
+      "from": "scan:runtime_wrapper/Tests/RuntimeWrapperTests/TripoSRMeshRuntimeTests.swift",
+      "to": "pkg.swift.shap-e",
       "rel": "depends_on",
       "origin": "scan"
     },
