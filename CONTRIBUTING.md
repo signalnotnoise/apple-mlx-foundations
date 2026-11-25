@@ -7,7 +7,7 @@ human and agent-authored changes.
 ## One-time setup
 
 ```bash
-git clone --recurse-submodules git@github.com:signalnotnoise/apple-mlx-foundations.git
+git clone --recurse-submodules https://github.com/signalnotnoise/apple-mlx-foundations.git
 cd apple-mlx-foundations
 knowledge_graph/install_hooks.sh
 python3 -m venv .mlx_venv

@@ -38,7 +38,7 @@ Details: [`shap_e/parity/README.md`](shap_e/parity/README.md). L2 shares the gol
 `TripoSR` is a git submodule. `RuntimeWrapper` depends on `TripoSR/Package.swift`, so a clone that does not check it out cannot resolve that package.
 
 ```bash
-git clone --recurse-submodules git@github.com:signalnotnoise/apple-mlx-foundations.git
+git clone --recurse-submodules https://github.com/signalnotnoise/apple-mlx-foundations.git
 # existing clone:
 git submodule update --init
 ```
