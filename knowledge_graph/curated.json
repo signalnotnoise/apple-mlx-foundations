@@ -916,7 +916,7 @@
       "kind": "test",
       "name": "Python tests",
       "path": "tests",
-      "summary": "test_check_standards.py, test_clip_text_embedder.py, test_download_shap_e_bundle.py, test_marching_cubes.py, test_mesh_batch_decode.py, test_runtime_golden.py, test_swift_test_runner.py."
+      "summary": "test_check_standards.py, test_clip_text_embedder.py, test_download_shap_e_bundle.py, test_marching_cubes.py, test_mesh_batch_decode.py, test_package_triposr_weights.py, test_runtime_golden.py, test_swift_test_runner.py."
     },
     {
       "id": "test.swift.shap-e",
@@ -980,6 +980,13 @@
       "name": "Knowledge graph refresh",
       "path": "AGENTS.md",
       "summary": "Every agent is required to refresh the graph before finishing a change. The hook repeats that refresh at commit time, so a tool that skips the instruction still cannot commit a stale graph.json."
+    },
+    {
+      "id": "tool.package-triposr",
+      "kind": "entrypoint",
+      "name": "package_triposr_weights.py",
+      "path": "scripts/package_triposr_weights.py",
+      "summary": "Stages the TripoSR weights release bundle: canonical triposr_swift_ready.safetensors plus provenance.json, checksums.sha256, licenses/NOTICE, model card, reproduce_export.py, and validation summaries. Refuses an existing staging directory. The intermediate triposr_mlx.safetensors is hashed into provenance but never staged."
     }
   ],
   "edges": [
@@ -1949,6 +1956,16 @@
       "from": "note.graph-refresh",
       "to": "tool.graph-update",
       "rel": "calls"
+    },
+    {
+      "from": "tool.package-triposr",
+      "to": "art.triposr-swift",
+      "rel": "consumes"
+    },
+    {
+      "from": "tool.package-triposr",
+      "to": "art.triposr-mlx",
+      "rel": "consumes"
     }
   ]
 }

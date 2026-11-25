@@ -47,6 +47,7 @@ apple-mlx-foundations/
 │   └── pull_request_template.md      Definition-of-done evidence checklist
 ├── scripts/
 │   ├── check_standards.py            Deterministic coding-standards gate
+│   ├── package_triposr_weights.py    Stages the TripoSR weights release bundle
 │   └── verify.sh                     Unified local verification entry point
 ├── .cursor/rules/                    Cursor pointer to the graph rule
 ├── .vscode/launch.json               ShapECLI debug/release launch definitions
@@ -161,6 +162,7 @@ runtime_wrapper/
 tests/
 ├── fixtures/runtime_golden_a_red_chair_steps2.json
 ├── test_download_shap_e_bundle.py
+├── test_package_triposr_weights.py
 ├── test_swift_test_runner.py
 ├── test_clip_text_embedder.py
 ├── test_marching_cubes.py
