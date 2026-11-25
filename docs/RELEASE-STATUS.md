@@ -1,8 +1,9 @@
 # Release status
 
-Last audited: **2026-11-17**.
+Last audited: **2026-11-19**.
 
-This is the canonical release record for the Shap-E v0.1.0 public release.
+This is the canonical release record for the Shap-E v0.1.0 public release
+and the TripoSR weights publication.
 Repository layout
 and the bundle file contract are documented in
 [File structure](FILE-STRUCTURE.md).
@@ -18,8 +19,8 @@ archive and is not part of this repository:
 |---|---|---|---|
 | Source code | `signalnotnoise/apple-mlx-foundations` on GitHub | Public; matching `v0.1.0` tag and GitHub Release published | Initial commit `018215715177943fe72cea8e540bc7b80dcb593f`; anonymous recursive clean clone, full local verification, public bundle download, and mesh smoke passed before tagging |
 | Shap-E weights | `signalNotNoise/shap-e-mlx` on Hugging Face | Public; matching `v0.1.0` tag | Pinned revision `d71f70a09b9c03535188d006a719edda5c19a6eb`; anonymous exact download verified against `checksums.sha256` |
-| TripoSR source submodule | `signalnotnoise/TripoSR` on GitHub | Public repository; pinned as a submodule here | `fe42dcca88fb27f3605aa394322ec3e751584233` |
-| TripoSR MLX weights | Not yet published | Separate release track | Local ignored `TripoSR/triposr_weights/*.safetensors` only |
+| TripoSR source submodule | `signalnotnoise/TripoSR` on GitHub | Public repository; pinned as a submodule here | `6da4a3cd3f8454f7c98607249476a26c836509ee` |
+| TripoSR MLX weights | `signalNotNoise/triposr-mlx` on Hugging Face | **Private** candidate; not public, no release flip yet | Pinned revision `d0094e6537dea1224b1619ac2780b27bfa129e1a` (weights commit `8353300f4a032aca9099c09344292a8809c2eb58`); authenticated fresh download + checksums + mesh recheck passed; anonymous access denied as expected while private |
 
 ## Shap-E v0.1.0 weights
 
@@ -122,11 +123,92 @@ The v0.1.0 gates are complete:
 Resolved since the prior audit: the GitHub profile public email is now
 `alex@signalnotnoise.dev`.
 
-Work deliberately left as a separate track: TripoSR weights. Before any
-`triposr-mlx` publication, verify derived-weight redistribution terms, choose
-the canonical file between `triposr_mlx.safetensors` and
-`triposr_swift_ready.safetensors`, document their roles, and run the same
-private-upload/fresh-download verification pattern.
+## TripoSR weights track (2026-11-19)
+
+The separate TripoSR track is closed up to the coordinated public flip,
+which has **not** happened: `signalNotNoise/triposr-mlx` is private.
+
+### Canonical artifact decision
+
+- **`triposr_swift_ready.safetensors` is the canonical published artifact**
+  (1,674,793,528 bytes, 499 tensors, SHA-256
+  `83563625f39180f505a3ccb855e67b59b65989f6545015672465d7487c4bc2cb`).
+  It is the only file `TripoSRModel.loadWeights` accepts: keys and layouts
+  already match the Swift modules, and the loader verifies shapes and
+  rejects unused keys.
+- `triposr_mlx.safetensors` (1,677,170,936 bytes, 549 tensors, SHA-256
+  `f72bb520b8b1a5639600ac818496f22d6ccb3b42d3942412bd1e2375ef780a2b`) is
+  an intermediate pack with upstream PyTorch keys. Its only consumer is
+  `TripoSR/convert_weights_to_mlx.py`; it is hashed into
+  `provenance.json` and **never published**.
+- Conversion is reproducible: `export_tripo_weights.py` pins upstream
+  revision `5b521936b01fbe1890f6f9baed0254ab6351c04a` (checkpoint
+  1,677,246,742 bytes, SHA-256
+  `429e2c6b22a0923967459de24d67f05962b235f79cde6b032aa7ed2ffcd970ee`),
+  `convert_weights_to_mlx.py` fails on any unmapped key, and a full
+  re-export on 2026-11-19 reproduced both files byte-for-byte.
+
+### Redistribution terms (recorded conclusion)
+
+Derived-weight redistribution is permitted under the upstream MIT release:
+
+- Upstream `VAST-AI-Research/TripoSR` `LICENSE` is the MIT License,
+  Copyright (c) 2024 Tripo AI & Stability AI (carried in the submodule and
+  in the bundle as `licenses/TripoSR.txt`).
+- The upstream README states: "The model is released under the MIT license,
+  which includes the source code, pretrained models, and an interactive
+  online demo."
+- The Hugging Face model card for `stabilityai/TripoSR` declares
+  `license: mit` and "License: MIT", and the repository is not gated
+  (checked 2026-11-19).
+- The checkpoint's image tokenizer is initialized from
+  `facebook/dino-vitb16` per the upstream config; those parameters ship
+  inside the upstream checkpoint under the release above and are attributed
+  in the bundle `NOTICE` and the repository [`NOTICE`](../NOTICE).
+
+Conversion is a format/layout export, not training or fine-tuning. The MIT
+copyright and permission notices are preserved in the bundle.
+
+### Publication record
+
+- Packaged by `scripts/package_triposr_weights.py`; the bundle's
+  `provenance.json` records the code and submodule commits
+  (`6da4a3cd3f8454f7c98607249476a26c836509ee` for the submodule, the pin
+  used here).
+- Hub repository `signalNotNoise/triposr-mlx`: weights commit
+  `8353300f4a032aca9099c09344292a8809c2eb58` (uploaded private), then
+  download-verification metadata commit
+  `d0094e6537dea1224b1619ac2780b27bfa129e1a`.
+- While private: fresh authenticated download of the pinned revision
+  passed all checksums and the mesh test, and anonymous access was
+  verified denied (proving privacy).
+
+### TripoSR evidence at this pin
+
+- **Tensor parity (`gate.triposr`), rerun end-to-end 2026-11-19:** all five
+  checks passed (image_tokens corr 0.98644, backbone_out 0.99735,
+  triplanes 0.99745, density 0.95021, color 0.99609). High correlation,
+  not bit-exact. The Python dump needed a `huggingface-hub>=1.5,<2`
+  overlay for transformers 5.5 (recorded in `TripoSR/SCRIPTS.md`).
+- **Mesh stage:** the parity gate does not compare meshes. The env-gated
+  `TripoSRMeshRuntimeTests` covers that stage end-to-end with the real
+  weights: `chair.png` at grid 64 produced a closed mesh (2,558 vertices,
+  5,116 faces, zero boundary/non-manifold/invalid faces), finite
+  in-bounds vertices, and in-range RGBA colors. A mesh-vs-mesh numerical
+  comparison against upstream `torchmcubes` remains undone and is a stated
+  limitation, not a passed gate.
+- **Unit tests:** `TripoSRRuntimeTests` is no longer a placeholder
+  (4 deterministic tests, run via `xcodebuild`), and `verify.sh` full
+  mode now runs the RuntimeWrapper suite.
+
+### Remaining TripoSR gates
+
+1. Coordinated public flip of `signalNotNoise/triposr-mlx` (separate
+   decision; Mesquette integration is coordinated separately).
+2. After any flip: anonymous fresh download at the pinned revision,
+   checksum verification, and the mesh test from the downloaded weights.
+3. Optional: mesh-vs-mesh comparison against upstream Python meshing, and
+   bicubic DINO pos-embed interpolation to tighten parity.
 
 ## Reproduce or audit the candidate
 

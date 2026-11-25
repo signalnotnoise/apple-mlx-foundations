@@ -27,7 +27,12 @@ Third-party software and models this project builds on:
    https://github.com/VAST-AI-Research/TripoSR
    MIT License, Copyright (c) 2024 Tripo AI & Stability AI.
    Included as the TripoSR git submodule, which carries its own LICENSE. The
-   Swift port under TripoSR/swift is part of that submodule.
+   Swift port under TripoSR/swift is part of that submodule. The upstream
+   release states the MIT license includes the source code and pretrained
+   models; the converted Swift weights are distributed separately (see
+   "Model weights" below). The TripoSR image tokenizer is initialized from
+   facebook/dino-vitb16 (Meta AI) per the upstream config, and those
+   parameters ship inside the upstream TripoSR checkpoint.
 
 4. MLX and mlx-swift (Apple)
    https://github.com/ml-explore/mlx
@@ -37,9 +42,12 @@ Third-party software and models this project builds on:
 
 Model weights:
 No pretrained model weights are included in this repository. Converted
-weights (runtime_bundle/) and downloaded checkpoints (shap_e_model_cache/)
-are git-ignored local artifacts that each user must generate or download
-under the upstream projects' licenses. The only tensors checked in are the
-tiny random-weight test stub under
+weights (runtime_bundle/, TripoSR/triposr_weights/) and downloaded
+checkpoints (shap_e_model_cache/) are git-ignored local artifacts that each
+user must generate or download under the upstream projects' licenses. The
+only tensors checked in are the tiny random-weight test stub under
 shap_e/swift/Tests/ShapERuntimeTests/Fixtures/, which contains no trained
-parameters.
+parameters. Converted weights are distributed separately on Hugging Face:
+signalNotNoise/shap-e-mlx (public) and signalNotNoise/triposr-mlx (private
+candidate), each with its own provenance, checksums, and license copies;
+see docs/RELEASE-STATUS.md for pinned revisions.

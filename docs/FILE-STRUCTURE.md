@@ -14,6 +14,7 @@ and publication gates live in [Release status](RELEASE-STATUS.md).
 | `TripoSR/` | TripoSR Python product and a second Swift package | The separate `signalnotnoise/TripoSR` Git repository, pinned here as a submodule |
 | Local ignored directories | Downloaded Torch checkpoints, the full converted `runtime_bundle/`, virtual environments, Swift/Xcode build products, parity dumps, mesh outputs | Nothing; regenerate or download them |
 | Hugging Face `signalNotNoise/shap-e-mlx` | Downloadable copy of the full Shap-E runtime bundle, BPE vocabulary, provenance, checksums, licenses, and validation summaries | Hugging Face Git revision |
+| Hugging Face `signalNotNoise/triposr-mlx` (private) | Canonical `triposr_swift_ready.safetensors`, provenance, checksums, licenses, model card, and validation summaries | Hugging Face Git revision |
 
 Do not confuse the three kinds of Shap-E bundle:
 
@@ -188,7 +189,7 @@ resolves that package again within its declared range.
 ### TripoSR submodule tree
 
 `TripoSR` is one Gitlink in this repository, currently documented at commit
-`fe42dcca88fb27f3605aa394322ec3e751584233` in
+`6da4a3cd3f8454f7c98607249476a26c836509ee` in
 [Release status](RELEASE-STATUS.md). Its own tracked layout is:
 
 ```text
@@ -228,7 +229,7 @@ from a fresh clone and must never be treated as source:
 | `shap_e_model_cache/` | Upstream CLIP/Shap-E `.pt` checkpoints and YAML configs | OpenAI `clip` / `shap_e.models.download` loaders |
 | `shap_e/shap_e_model_cache/` | Alternate cache location recognized by some tools | Same loaders, depending on working directory |
 | `runtime_bundle/` | Full converted format-v1 bundle | `mlx_shap_e.offline_tools.runtime_artifact_exports:prepare_runtime_artifacts` or a downloaded Hugging Face snapshot |
-| `TripoSR/triposr_weights/` | `triposr_mlx.safetensors` and `triposr_swift_ready.safetensors` | `TripoSR/export_tripo_weights.py`, then `TripoSR/convert_weights_to_mlx.py` |
+| `TripoSR/triposr_weights/` | `triposr_mlx.safetensors` (intermediate pack, never published) and `triposr_swift_ready.safetensors` (canonical Swift artifact, published privately as `signalNotNoise/triposr-mlx`) | `TripoSR/export_tripo_weights.py`, then `TripoSR/convert_weights_to_mlx.py`; stage the release bundle with `scripts/package_triposr_weights.py` |
 | `shap_e/parity/*.npy`, `*.npz`, summaries, `case.json` | Generated L2 dumps | `shap_e/scripts/run_parity.sh` |
 | `TripoSR/parity/*.npy`, `*.npz` | Generated TripoSR parity dumps | `TripoSR/scripts/run_parity.sh` |
 | `shap_e/mesh_ab/`, `shap_e/mesh_ab_smoke/` | Mesh A/B outputs | `shap_e/scripts/run_mesh_ab.sh` |
@@ -390,6 +391,20 @@ those are not repository files and are not part of the Hub tree.
 No source code needed to use the bundle lives only on Hugging Face. The Hub
 `reproduce_export.py` is a release driver; model and loader source is in this
 GitHub repository, and `provenance.json` pins the tested code commit.
+
+### TripoSR weights repository (private)
+
+`signalNotNoise/triposr-mlx` follows the same pattern at a smaller scale.
+At the pinned revision in [Release status](RELEASE-STATUS.md) it contains
+12 files: `.gitattributes` plus the 11 staged files —
+`triposr_swift_ready.safetensors` (499 tensors, 1,674,793,528 bytes),
+`provenance.json`, `checksums.sha256` (10 entries: every staged file except
+itself), `LICENSE`, `NOTICE`, `README.md` (model card),
+`reproduce_export.py`, `licenses/TripoSR.txt`, and
+`validation/{parity-summary,mesh-smoke,download-verification}.json`.
+The intermediate `triposr_mlx.safetensors` is not in the repository.
+Staging is produced by `scripts/package_triposr_weights.py`, which refuses
+to reuse an existing staging directory.
 
 ## Documentation map
 
