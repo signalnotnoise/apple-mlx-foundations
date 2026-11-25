@@ -300,7 +300,7 @@
       "name": "triposr_swift_ready.safetensors",
       "path": "TripoSR/triposr_weights/triposr_swift_ready.safetensors",
       "optional": true,
-      "summary": "Canonical TripoSR Swift artifact (499 tensors). Only weight file TripoSRModel.loadWeights accepts. Published privately as signalNotNoise/triposr-mlx; see docs/RELEASE-STATUS.md for the pinned revision.",
+      "summary": "Canonical TripoSR Swift artifact (499 tensors). Only weight file TripoSRModel.loadWeights accepts. Published publicly as signalNotNoise/triposr-mlx; see docs/RELEASE-STATUS.md for the pinned revision.",
       "origin": "curated"
     },
     {
@@ -1201,7 +1201,7 @@
       "id": "ext.hf-triposr-mlx",
       "kind": "external",
       "name": "signalNotNoise/triposr-mlx",
-      "summary": "Private Hugging Face bundle for the canonical TripoSR Swift weights: safetensors, provenance.json, checksums.sha256, licenses/NOTICE, model card, reproduce driver, validation summaries. Staged by scripts/package_triposr_weights.py. Public flip is a later coordinated decision; anonymous download is denied while private.",
+      "summary": "Public Hugging Face bundle for the canonical TripoSR Swift weights: safetensors, provenance.json, checksums.sha256, licenses/NOTICE, model card, reproduce driver, validation summaries. Staged by scripts/package_triposr_weights.py. Flipped public 2026-11-23 after private verification; anonymous download, checksums, and mesh recheck passed at the pinned revision.",
       "origin": "curated"
     },
     {

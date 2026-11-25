@@ -48,6 +48,5 @@ user must generate or download under the upstream projects' licenses. The
 only tensors checked in are the tiny random-weight test stub under
 shap_e/swift/Tests/ShapERuntimeTests/Fixtures/, which contains no trained
 parameters. Converted weights are distributed separately on Hugging Face:
-signalNotNoise/shap-e-mlx (public) and signalNotNoise/triposr-mlx (private
-candidate), each with its own provenance, checksums, and license copies;
+signalNotNoise/shap-e-mlx and signalNotNoise/triposr-mlx (both public), each with its own provenance, checksums, and license copies;
 see docs/RELEASE-STATUS.md for pinned revisions.

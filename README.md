@@ -163,7 +163,7 @@ schema, and Hugging Face tree are maintained in
 | Mesh (Python product) | `python TripoSR/run.py examples/chair.png --output-dir output/` |
 | Mesh (Swift) | `RuntimeWrapper` (`TripoSRMeshRuntime`) — see below |
 | Gradio demo | `python TripoSR/gradio_app.py` |
-| Swift weights | `python TripoSR/export_tripo_weights.py` then `convert_weights_to_mlx.py`, or the private `signalNotNoise/triposr-mlx` bundle (see [`docs/RELEASE-STATUS.md`](docs/RELEASE-STATUS.md)) |
+| Swift weights | `python TripoSR/export_tripo_weights.py` then `convert_weights_to_mlx.py`, or the public `signalNotNoise/triposr-mlx` bundle (see [`docs/RELEASE-STATUS.md`](docs/RELEASE-STATUS.md)) |
 | Parity PyTorch ↔ Swift | `./TripoSR/scripts/run_parity.sh` |
 
 Swift details: [`TripoSR/swift/README.md`](TripoSR/swift/README.md).

@@ -1,6 +1,6 @@
 # Release status
 
-Last audited: **2026-11-19**.
+Last audited: **2026-11-23**.
 
 This is the canonical release record for the Shap-E v0.1.0 public release
 and the TripoSR weights publication.
@@ -20,7 +20,7 @@ archive and is not part of this repository:
 | Source code | `signalnotnoise/apple-mlx-foundations` on GitHub | Public; matching `v0.1.0` tag and GitHub Release published | Initial commit `018215715177943fe72cea8e540bc7b80dcb593f`; anonymous recursive clean clone, full local verification, public bundle download, and mesh smoke passed before tagging |
 | Shap-E weights | `signalNotNoise/shap-e-mlx` on Hugging Face | Public; matching `v0.1.0` tag | Pinned revision `d71f70a09b9c03535188d006a719edda5c19a6eb`; anonymous exact download verified against `checksums.sha256` |
 | TripoSR source submodule | `signalnotnoise/TripoSR` on GitHub | Public repository; pinned as a submodule here | `6da4a3cd3f8454f7c98607249476a26c836509ee` |
-| TripoSR MLX weights | `signalNotNoise/triposr-mlx` on Hugging Face | **Private** candidate; not public, no release flip yet | Pinned revision `d0094e6537dea1224b1619ac2780b27bfa129e1a` (weights commit `8353300f4a032aca9099c09344292a8809c2eb58`); authenticated fresh download + checksums + mesh recheck passed; anonymous access denied as expected while private |
+| TripoSR MLX weights | `signalNotNoise/triposr-mlx` on Hugging Face | **Public** | Pinned revision `17a0c5286e2b2bb6fc9e3654ca31cfc9dc4b2041` (weights commit `8353300f4a032aca9099c09344292a8809c2eb58`, unchanged since the private upload); anonymous fresh download + checksums + mesh recheck passed |
 
 ## Shap-E v0.1.0 weights
 
@@ -125,8 +125,9 @@ Resolved since the prior audit: the GitHub profile public email is now
 
 ## TripoSR weights track (2026-11-19)
 
-The separate TripoSR track is closed up to the coordinated public flip,
-which has **not** happened: `signalNotNoise/triposr-mlx` is private.
+The separate TripoSR track is closed. `signalNotNoise/triposr-mlx` was
+uploaded private, verified, and flipped **public on 2026-11-23** at the
+owner's direction; the post-flip anonymous gates below passed the same day.
 
 ### Canonical artifact decision
 
@@ -182,6 +183,15 @@ copyright and permission notices are preserved in the bundle.
 - While private: fresh authenticated download of the pinned revision
   passed all checksums and the mesh test, and anonymous access was
   verified denied (proving privacy).
+- **Public flip (2026-11-23):** visibility set to public with the weights
+  blob unchanged. An unauthenticated download (fresh `HOME`, no
+  `HF_TOKEN`) of pinned revision `d0094e6537dea1224b1619ac2780b27bfa129e1a`
+  passed `shasum -a 256 -c checksums.sha256` (10 entries), and the
+  downloaded weights passed the RuntimeWrapper mesh test with the
+  identical closed topology (2,558 vertices / 5,116 faces). The flip was
+  then recorded in `validation/download-verification.json` at commit
+  `17a0c5286e2b2bb6fc9e3654ca31cfc9dc4b2041` (current head), whose own
+  anonymous download and checksum verification also passed.
 
 ### TripoSR evidence at this pin
 
@@ -203,12 +213,10 @@ copyright and permission notices are preserved in the bundle.
 
 ### Remaining TripoSR gates
 
-1. Coordinated public flip of `signalNotNoise/triposr-mlx` (separate
-   decision; Mesquette integration is coordinated separately).
-2. After any flip: anonymous fresh download at the pinned revision,
-   checksum verification, and the mesh test from the downloaded weights.
-3. Optional: mesh-vs-mesh comparison against upstream Python meshing, and
+1. Optional: mesh-vs-mesh comparison against upstream Python meshing, and
    bicubic DINO pos-embed interpolation to tighten parity.
+2. Mesquette integration is coordinated separately and is not part of
+   this record.
 
 ## Reproduce or audit the candidate
 
