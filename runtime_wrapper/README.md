@@ -18,8 +18,12 @@ model package directly.
 `RuntimeWrapper` depends on the `TripoSR` submodule. From the repository root:
 
 ```bash
+git submodule sync
 git submodule update --init
 ```
+
+(`sync` refreshes a cached submodule URL from `.gitmodules` — needed in
+clones made before the TripoSR submodule switched from SSH to HTTPS.)
 
 ## Usage
 

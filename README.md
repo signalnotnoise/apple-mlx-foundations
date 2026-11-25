@@ -39,7 +39,8 @@ Details: [`shap_e/parity/README.md`](shap_e/parity/README.md). L2 shares the gol
 
 ```bash
 git clone --recurse-submodules https://github.com/signalnotnoise/apple-mlx-foundations.git
-# existing clone:
+# existing clone (sync first so a cached pre-HTTPS submodule URL is refreshed):
+git submodule sync
 git submodule update --init
 ```
 

@@ -1,6 +1,6 @@
 # Release status
 
-Last audited: **2026-11-23**.
+Last audited: **2026-11-25**.
 
 This is the canonical release record for the Shap-E v0.1.0 public release
 and the TripoSR weights publication.
@@ -20,7 +20,7 @@ archive and is not part of this repository:
 | Source code | `signalnotnoise/apple-mlx-foundations` on GitHub | Public; matching `v0.1.0` tag and GitHub Release published | Initial commit `018215715177943fe72cea8e540bc7b80dcb593f`; anonymous recursive clean clone, full local verification, public bundle download, and mesh smoke passed before tagging |
 | Shap-E weights | `signalNotNoise/shap-e-mlx` on Hugging Face | Public; matching `v0.1.0` tag | Pinned revision `d71f70a09b9c03535188d006a719edda5c19a6eb`; anonymous exact download verified against `checksums.sha256` |
 | TripoSR source submodule | `signalnotnoise/TripoSR` on GitHub | Public repository; pinned as a submodule here | `6da4a3cd3f8454f7c98607249476a26c836509ee` |
-| TripoSR MLX weights | `signalNotNoise/triposr-mlx` on Hugging Face | **Public** | Pinned revision `17a0c5286e2b2bb6fc9e3654ca31cfc9dc4b2041` (weights commit `8353300f4a032aca9099c09344292a8809c2eb58`, unchanged since the private upload); anonymous fresh download + checksums + mesh recheck passed |
+| TripoSR MLX weights | `signalNotNoise/triposr-mlx` on Hugging Face | **Public** | Pinned revision `76f3028746d0b5f39b6ba0205ede9e28835f106d` (weights commit `8353300f4a032aca9099c09344292a8809c2eb58`, unchanged since the private upload; later commits touch only the model card and verification record); anonymous fresh download + checksums + mesh recheck passed |
 
 ## Shap-E v0.1.0 weights
 
@@ -190,8 +190,18 @@ copyright and permission notices are preserved in the bundle.
   downloaded weights passed the RuntimeWrapper mesh test with the
   identical closed topology (2,558 vertices / 5,116 faces). The flip was
   then recorded in `validation/download-verification.json` at commit
-  `17a0c5286e2b2bb6fc9e3654ca31cfc9dc4b2041` (current head), whose own
+  `17a0c5286e2b2bb6fc9e3654ca31cfc9dc4b2041`, whose own
   anonymous download and checksum verification also passed.
+- **Model-card link fix (2026-11-25):** the bundle `README.md` linked to
+  the private `apple-mlx-foundations-archive`; commit
+  `07c5778e1c1ffce384a8dce5f553e5c50c235e0c` points it at this public
+  repository and refreshes its `checksums.sha256` entry. An
+  unauthenticated download of that revision passed all 10 checksums
+  and the mesh recheck; the fix is recorded in
+  `validation/download-verification.json` at commit
+  `76f3028746d0b5f39b6ba0205ede9e28835f106d` (current head), whose own
+  anonymous download and checksum verification also passed. Weights
+  and provenance are unchanged.
 
 ### TripoSR evidence at this pin
 
